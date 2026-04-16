@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Article } from "@/lib/types";
 import { BackButton } from "./BackButton";
@@ -51,9 +52,14 @@ export function ArticleDetailView({
               );
             }
             return (
-              <figure key={index} className="overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={block.src} alt={block.alt} className="w-full" />
+              <figure key={index} className="relative overflow-hidden">
+                <Image
+                  src={block.src}
+                  alt={block.alt}
+                  width={960}
+                  height={400}
+                  className="w-full object-cover"
+                />
               </figure>
             );
           })}
