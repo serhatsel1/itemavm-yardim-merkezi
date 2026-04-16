@@ -3,6 +3,7 @@
 import type { Category } from "@/lib/types";
 import { SearchIcon } from "@/components/icons";
 import { SidebarCategory } from "./SidebarCategory";
+import { SidebarCategorySkeleton } from "./Skeleton";
 
 export function Sidebar({
   categories,
@@ -12,6 +13,7 @@ export function Sidebar({
   onToggleCategory,
   activeSlug,
   onSelectArticle,
+  isSearching = false,
 }: {
   categories: Category[];
   query: string;
@@ -20,11 +22,12 @@ export function Sidebar({
   onToggleCategory: (id: string) => void;
   activeSlug: string | null;
   onSelectArticle: (slug: string) => void;
+  isSearching?: boolean;
 }) {
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-5 lg:w-[400px]">
+    <aside className="flex w-full shrink-0 flex-col gap-5 lg:w-100">
       <label className="relative flex h-14 items-center rounded-lg border border-white/10 bg-card px-4">
-        <SearchIcon className="h-[18px] w-[18px] text-text" />
+        <SearchIcon className="h-4.5 w-4.5 text-text" />
         <input
           type="text"
           value={query}
@@ -36,7 +39,11 @@ export function Sidebar({
       </label>
 
       <div className="flex flex-col gap-4">
-        {categories.length === 0 ? (
+        {isSearching ? (
+          Array.from({ length: 4 }).map((_, i) => (
+            <SidebarCategorySkeleton key={i} />
+          ))
+        ) : categories.length === 0 ? (
           <p className="rounded-lg border border-white/5 bg-card p-4 text-[14px] text-text-muted">
             Sonuç bulunamadı.
           </p>

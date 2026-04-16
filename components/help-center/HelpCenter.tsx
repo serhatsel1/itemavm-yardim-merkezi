@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Article, Category, HelpCenterData } from "@/lib/types";
 import { useHashRoute } from "@/lib/hooks/useHashRoute";
 import { useArticleSearch } from "@/lib/hooks/useArticleSearch";
+import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
 import { ChevronDownIcon, GridIcon, SearchIcon } from "@/components/icons";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
@@ -25,12 +26,15 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
   const { categories } = data;
   const [activeSlug, setActiveSlug] = useHashRoute();
   const [query, setQuery] = useState("");
+  const debouncedQuery = useDebouncedValue(query, 300);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const { filteredCategories, isFiltered } = useArticleSearch(
     categories,
-    query
+    debouncedQuery
   );
+
+  const isSearching = query !== debouncedQuery;
 
   const match = useMemo(
     () => findArticle(categories, activeSlug),
@@ -95,6 +99,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
           categories={filteredCategories}
           onOpenArticle={handleSelectArticle}
           isFiltered={isFiltered}
+          isSearching={isSearching}
         />
       )}
     </AnimatePresence>
@@ -161,6 +166,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
             onToggleCategory={handleToggleCategory}
             activeSlug={activeSlug}
             onSelectArticle={handleSelectArticle}
+            isSearching={isSearching}
           />
           <div className="w-0.5 shrink-0 rounded-[63px] bg-border-soft" />
           <main className="flex min-w-0 flex-1 justify-center">
