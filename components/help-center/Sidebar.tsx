@@ -1,7 +1,7 @@
 "use client";
 
 import type { Category } from "@/lib/types";
-import { SearchIcon } from "@/components/icons";
+import { CloseIcon, SearchIcon } from "@/components/icons";
 import { SidebarCategory } from "./SidebarCategory";
 import { SidebarCategorySkeleton } from "./Skeleton";
 
@@ -26,8 +26,8 @@ export function Sidebar({
 }) {
   return (
     <aside className="flex w-full shrink-0 flex-col gap-5 lg:w-100">
-      <label className="relative flex h-14 items-center rounded-lg border border-white/10 bg-card px-4">
-        <SearchIcon className="h-4.5 w-4.5 text-text" />
+      <div className="relative flex h-14 items-center rounded-lg border border-white/10 bg-card px-4">
+        <SearchIcon className="h-4.5 w-4.5 shrink-0 text-text" />
         <input
           type="text"
           value={query}
@@ -36,7 +36,17 @@ export function Sidebar({
           className="ml-3 w-full bg-transparent text-[15px] text-text placeholder:text-text-muted focus:outline-none"
           aria-label="Makalelerde ara"
         />
-      </label>
+        {query && (
+          <button
+            type="button"
+            onClick={() => onQueryChange("")}
+            className="ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-text-muted transition-colors hover:bg-white/20 hover:text-text"
+            aria-label="Aramayı temizle"
+          >
+            <CloseIcon className="h-2.5 w-2.5" />
+          </button>
+        )}
+      </div>
 
       <div className="flex flex-col gap-4">
         {isSearching ? (
