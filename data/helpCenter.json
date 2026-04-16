@@ -1,0 +1,256 @@
+{
+  "categories": [
+    {
+      "id": "genel-konular",
+      "title": "Genel Konular",
+      "icon": "info",
+      "articles": [
+        {
+          "id": "itemavm-guvenilir-mi",
+          "slug": "itemavm-guvenilir-mi",
+          "categoryId": "genel-konular",
+          "title": "itemavm.com güvenilir mi?",
+          "summary": "itemAVM güvenlik altyapısı, doğrulanmış satıcılar ve alıcı koruma sistemi hakkında bilmeniz gerekenler.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "itemAVM, alıcı ve satıcıları güvenli bir ortamda buluşturmak için tasarlanmış bir ilan ve pazaryeri platformudur. Tüm ödeme akışları SSL ile korunur; satıcı hesapları kimlik ve iletişim doğrulamasından geçer. Güvenliğiniz için platform dışında ödeme yapmanız önerilmez."
+            },
+            {
+              "type": "paragraph",
+              "text": "Sipariş tamamlanana ve alıcı onayı gerçekleşene kadar satıcı ödemesi güvence havuzunda tutulur. Bu sayede olası uyuşmazlıklarda iade ve itiraz süreçleri itemAVM tarafından yönetilir."
+            },
+            {
+              "type": "heading",
+              "text": "Güvenlik önerileri"
+            },
+            {
+              "type": "paragraph",
+              "text": "Şüpheli bir durumla karşılaştığınızda 'Canlı Desteğe Bağlan' butonuyla anında destek ekibiyle iletişime geçebilir, ilan sayfasındaki 'Şikayet Et' bağlantısıyla bildirim oluşturabilirsiniz."
+            }
+          ],
+          "views": 10998,
+          "likes": 205,
+          "dislikes": 20
+        },
+        {
+          "id": "size-nasil-ulasabilirim",
+          "slug": "size-nasil-ulasabilirim",
+          "categoryId": "genel-konular",
+          "title": "Size Nasıl Ulaşabilirim?",
+          "summary": "Destek ekibimize e-posta, canlı destek ve yardım merkezi üzerinden nasıl ulaşabileceğinizi öğrenin.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "itemAVM destek ekibine 7/24 canlı destek, e-posta (destek@itemavm.com) ve yardım merkezi formu üzerinden ulaşabilirsiniz. Canlı destekte ortalama yanıt süresi 2 dakikadır."
+            },
+            {
+              "type": "paragraph",
+              "text": "Acil durumlarda sağ alt köşedeki canlı destek butonunu kullanın. Genel sorularınız için bu yardım merkezindeki kategorilerden ilgili makaleye göz atabilirsiniz."
+            }
+          ],
+          "views": 7240,
+          "likes": 142,
+          "dislikes": 8
+        },
+        {
+          "id": "mail-ve-telefon-onayi",
+          "slug": "mail-ve-telefon-onayi",
+          "categoryId": "genel-konular",
+          "title": "Üyeliğim için Mail ve Telefon Onayı Nasıl Yapabilirim?",
+          "summary": "itemAVM üyeliğinizi aktifleştirmek için e-posta ve telefon doğrulama adımlarını takip edin.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Kayıt sonrası hesabınıza giriş yaptığınızda profil sayfasında 'E-posta Doğrula' ve 'Telefon Doğrula' butonlarını göreceksiniz. E-posta doğrulama için gelen kutunuzdaki onay bağlantısına tıklamanız yeterlidir."
+            },
+            {
+              "type": "paragraph",
+              "text": "Telefon doğrulaması SMS ile gönderilen 6 haneli kodun ilgili alana girilmesiyle tamamlanır. Doğrulama tamamlanmadan ilan yayınlayamaz ya da teklif veremezsiniz."
+            }
+          ],
+          "views": 5412,
+          "likes": 98,
+          "dislikes": 6
+        }
+      ]
+    },
+    {
+      "id": "odeme-yontemleri",
+      "title": "Ödeme Yöntemleri",
+      "icon": "payment",
+      "articles": [
+        {
+          "id": "hangi-odeme-yontemleri",
+          "slug": "hangi-odeme-yontemleri-kullanilabilir",
+          "categoryId": "odeme-yontemleri",
+          "title": "Hangi Ödeme Yöntemleri Kullanılabilir?",
+          "summary": "Kredi kartı, havale/EFT ve dijital cüzdan seçenekleriyle itemAVM üzerinde güvenle alışveriş yapın.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "itemAVM üzerinde kredi kartı, banka kartı, havale/EFT ve desteklenen dijital cüzdanlar ile ödeme yapabilirsiniz. Kredi kartı ödemelerinde 3D Secure her zaman aktiftir."
+            },
+            {
+              "type": "paragraph",
+              "text": "Havale/EFT ile yapılan ödemeler otomatik olarak sisteme yansır; banka onayı sonrası sipariş durumu 'Ödeme Alındı' olarak güncellenir. Ödeme başarısız olursa sipariş 24 saat boyunca beklemeye alınır."
+            }
+          ],
+          "views": 4820,
+          "likes": 174,
+          "dislikes": 11
+        },
+        {
+          "id": "iade-sureci",
+          "slug": "iade-sureci-nasil-isler",
+          "categoryId": "odeme-yontemleri",
+          "title": "İade Süreci Nasıl İşler?",
+          "summary": "itemAVM iade süreci adım adım: talep oluşturma, onay, kargo ve geri ödeme.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "İade talebi oluşturmak için 'Siparişlerim' sayfasından ilgili siparişe girip 'İade Talep Et' butonuna tıklayın. Talebiniz satıcıya iletilir; satıcı 24 saat içinde talebe dönüş yapar."
+            },
+            {
+              "type": "paragraph",
+              "text": "Kargo süreci itemAVM anlaşmalı kargo firmaları üzerinden ücretsiz gerçekleşir. Ürün satıcıya ulaştıktan sonra uygunluk kontrolü yapılır ve 1-3 iş günü içinde geri ödemeniz başlatılır."
+            },
+            {
+              "type": "heading",
+              "text": "Geri ödeme süreleri"
+            },
+            {
+              "type": "paragraph",
+              "text": "Kredi kartı ile yapılan ödemelerde iade, bankanıza bağlı olarak 3-10 iş günü içinde kartınıza yansır. Havale/EFT ödemelerinde belirttiğiniz IBAN'a 1-3 iş günü içinde transfer edilir."
+            }
+          ],
+          "views": 9120,
+          "likes": 312,
+          "dislikes": 24
+        }
+      ]
+    },
+    {
+      "id": "yayinci-ekosistemi",
+      "title": "Yayıncı Ekosistemi",
+      "icon": "publisher",
+      "articles": [
+        {
+          "id": "stoklu-ilan-nasil-eklenir",
+          "slug": "stoklu-ilan-nasil-eklenir",
+          "categoryId": "yayinci-ekosistemi",
+          "title": "Stoklu İlan Nasıl Eklenir?",
+          "summary": "Birden fazla adet ürününüzü tek ilan altında yönetmek için stoklu ilan oluşturun.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Stoklu ilan, aynı ürünü birden fazla adet satmanızı sağlayan ilan tipidir. 'İlan Ekle' sayfasında 'Stoklu İlan' seçeneğini işaretleyerek başlayabilirsiniz."
+            },
+            {
+              "type": "paragraph",
+              "text": "Stok adedi, satış gerçekleştikçe otomatik azalır ve stok bittiğinde ilan pasif duruma geçer. İstediğiniz zaman satıcı panelinden stok adedini güncelleyebilirsiniz."
+            }
+          ],
+          "views": 6315,
+          "likes": 221,
+          "dislikes": 9
+        },
+        {
+          "id": "manuel-otomatik-teslimat",
+          "slug": "manuel-ve-stoktan-otomatik-teslimat-nedir",
+          "categoryId": "yayinci-ekosistemi",
+          "title": "Manuel ve Stoktan Otomatik Teslimat Nedir?",
+          "summary": "Dijital ürün teslimat yöntemleri arasındaki farkları öğrenerek satışlarınızı hızlandırın.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "itemAVM stoktan otomatik teslimatı tercih etmeniz durumunda, stoklarınız üstünden doğrudan teslimat sağlama seçenekleri sağlanır. Alıcı tarafından onaylanmasa da sipariş 24 saat içerisinde sistemimizde 'tamamlandı' ibaresiyle yer alır."
+            },
+            {
+              "type": "paragraph",
+              "text": "Manuel teslimatlarda siparişi 'Satıcı' tarafın başlatması ve tamamlandıktan sonra 'tamamlandı' seçeneğini işaretlemesi gereklidir. itemAVM platformu üzerinden ilan açarken manuel ve stoktan otomatik teslimat seçeneklerinden birini tercih ederek siparişlerin nasıl iletileceğini satıcı olarak belirleyebilirsiniz."
+            },
+            {
+              "type": "heading",
+              "text": "Hangisini seçmeliyim?"
+            },
+            {
+              "type": "paragraph",
+              "text": "Stokta hazır dijital ürünler (lisans anahtarı, hesap, kupon) için stoktan otomatik teslimat; hizmet veya özel sipariş gerektiren ürünler için manuel teslimat önerilir."
+            }
+          ],
+          "views": 11840,
+          "likes": 403,
+          "dislikes": 18
+        },
+        {
+          "id": "video-kaydi",
+          "slug": "ilan-satislarini-video-kaydina-alma",
+          "categoryId": "yayinci-ekosistemi",
+          "title": "İlan Satışlarını Nasıl Video Kaydına Alabilirim?",
+          "summary": "Satış süreçlerinizi belgelemek için itemAVM video kayıt özelliğini nasıl kullanacağınızı öğrenin.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Satıcı panelindeki 'Video Kayıt' sekmesini kullanarak her satış için video kaydı başlatabilirsiniz. Kayıtlar siparişe otomatik olarak eklenir ve olası uyuşmazlıklarda kanıt olarak kullanılabilir."
+            },
+            {
+              "type": "paragraph",
+              "text": "Video kayıtları 30 gün boyunca sistemde saklanır; isterseniz panelden MP4 olarak indirip yerel olarak arşivleyebilirsiniz."
+            }
+          ],
+          "views": 2980,
+          "likes": 61,
+          "dislikes": 3
+        }
+      ]
+    },
+    {
+      "id": "kapak-fotografi",
+      "title": "Kapak Fotoğrafı Değiştirme",
+      "icon": "cover-image",
+      "articles": [
+        {
+          "id": "kapak-fotografi-nasil-degistirilir",
+          "slug": "kapak-fotografi-nasil-degistirilir",
+          "categoryId": "kapak-fotografi",
+          "title": "Kapak Fotoğrafı Nasıl Değiştirilir?",
+          "summary": "Mağaza profilinizin kapak görselini güncellemek için adım adım rehber.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Satıcı panelinden 'Mağazam' sekmesine girin ve sağ üstteki kalem simgesine tıklayın. Açılan ekrandan 'Kapak Fotoğrafı' alanına yeni görseli sürükleyip bırakabilirsiniz."
+            },
+            {
+              "type": "paragraph",
+              "text": "Yüklediğiniz fotoğraf otomatik olarak önerilen boyuta kırpılır. Değişiklikler anında canlıya yansır; ekstra bir onay adımı bulunmamaktadır."
+            }
+          ],
+          "views": 3412,
+          "likes": 88,
+          "dislikes": 4
+        },
+        {
+          "id": "kapak-fotografi-onerilen-boyutlar",
+          "slug": "kapak-fotografi-onerilen-boyutlar",
+          "categoryId": "kapak-fotografi",
+          "title": "Önerilen Kapak Fotoğrafı Boyutları",
+          "summary": "En iyi görünüm için ideal kapak boyutları ve format önerileri.",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "itemAVM mağaza kapakları için önerilen boyut 1920x480 pikseldir. Dosya formatı olarak JPG veya PNG kullanabilirsiniz; maksimum dosya boyutu 5 MB'dir."
+            },
+            {
+              "type": "paragraph",
+              "text": "Mobil uyum için kapak görselinizin merkez bölgesinde metin veya logo bulundurmanızı öneririz; böylece tüm ekran boyutlarında önemli içerik kırpılmaz."
+            }
+          ],
+          "views": 1850,
+          "likes": 47,
+          "dislikes": 2
+        }
+      ]
+    }
+  ]
+}
