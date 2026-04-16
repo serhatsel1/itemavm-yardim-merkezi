@@ -4,6 +4,16 @@ export type CategoryIconKey =
   | "publisher"
   | "cover-image";
 
+export type ArticleIconKey =
+  | "info"
+  | "payment"
+  | "publisher"
+  | "cover-image"
+  | "weapon"
+  | "money"
+  | "software"
+  | "find";
+
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }
@@ -13,6 +23,7 @@ export interface Article {
   id: string;
   slug: string;
   categoryId: string;
+  icon: ArticleIconKey;
   title: string;
   summary: string;
   content: ArticleContentBlock[];
