@@ -62,25 +62,6 @@ export const DislikeIcon = (props: IconProps) => (
   </svg>
 );
 
-export const SupportIcon = (props: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path
-      d="M4 12a8 8 0 0 1 16 0v5a3 3 0 0 1-3 3h-1v-7h4"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M4 13v4a3 3 0 0 0 3 3h1v-7H4Z"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 export const CloseIcon = (props: IconProps) => (
   <svg viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M1 1l11 11M12 1 1 12" stroke="currentColor" strokeWidth="1.575" strokeLinecap="round" />
