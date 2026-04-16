@@ -221,7 +221,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
       <MobileCategoryDrawer
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
-        categories={filteredCategories}
+        categories={categories}
         expandedIds={expandedIds}
         onToggleCategory={handleToggleCategory}
         activeSlug={activeSlug}
