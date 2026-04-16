@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Category } from "@/lib/types";
-import { CloseIcon } from "@/components/icons";
+import { CloseIcon, GridIcon } from "@/components/icons";
 import { SidebarCategory } from "./SidebarCategory";
 
 export function MobileCategoryDrawer({
@@ -22,53 +23,77 @@ export function MobileCategoryDrawer({
   activeSlug: string | null;
   onSelectArticle: (slug: string) => void;
 }) {
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <AnimatePresence>
       {open && (
         <>
+          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-black/60 lg:hidden"
           />
+
+          {/* Bottom sheet */}
           <motion.div
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ type: "spring", damping: 28, stiffness: 260 }}
-            className="scrollbar-thin fixed inset-y-0 left-0 z-50 flex w-[90%] max-w-[400px] flex-col overflow-y-auto bg-panel p-4 lg:hidden"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="fixed inset-x-0 bottom-0 z-50 flex max-h-[90vh] flex-col rounded-t-[20px] border-t-2 border-white/10 bg-panel lg:hidden"
             role="dialog"
-            aria-label="Tüm Kategoriler"
+            aria-label="Kategoriler"
           >
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-[18px] font-semibold text-text">
-                Tüm Kategoriler
-              </h2>
+            {/* Header */}
+            <div className="relative flex shrink-0 flex-col items-center px-4 pt-6">
+              <div className="flex items-center gap-2.5">
+                <GridIcon className="h-6 w-6 text-white" />
+                <span className="text-[18px] font-semibold leading-[1.333] tracking-[-0.006em] text-white">
+                  Kategoriler
+                </span>
+              </div>
+
+              {/* Close button */}
               <button
                 type="button"
                 onClick={onClose}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-card text-text-muted hover:text-text"
+                className="absolute right-4 top-6 flex h-7.5 w-7.5 items-center justify-center text-white"
                 aria-label="Kapat"
               >
-                <CloseIcon className="h-4 w-4" />
+                <CloseIcon className="h-3.25 w-3.25" />
               </button>
+
+              {/* Divider */}
+              <div className="mt-4 h-px w-86.5 bg-divider" />
             </div>
-            <div className="flex flex-col gap-3">
-              {categories.map((category) => (
-                <SidebarCategory
-                  key={category.id}
-                  category={category}
-                  expanded={expandedIds.has(category.id)}
-                  activeSlug={activeSlug}
-                  onToggle={onToggleCategory}
-                  onSelect={(slug) => {
-                    onSelectArticle(slug);
-                    onClose();
-                  }}
-                />
-              ))}
+
+            {/* Category list */}
+            <div className="scrollbar-thin flex-1 overflow-y-auto px-4 pb-8 pt-6">
+              <div className="mx-auto flex w-full max-w-100 flex-col gap-4">
+                {categories.map((category) => (
+                  <SidebarCategory
+                    key={category.id}
+                    category={category}
+                    expanded={expandedIds.has(category.id)}
+                    activeSlug={activeSlug}
+                    onToggle={onToggleCategory}
+                    onSelect={(slug) => {
+                      onSelectArticle(slug);
+                      onClose();
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           </motion.div>
         </>
