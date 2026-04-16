@@ -17,10 +17,10 @@ export function ArticleCard({
     >
       <CategoryIcon icon={article.icon} className="h-14.25 w-14.25 object-contain" />
       <div className="flex flex-col gap-3.25">
-        <h3 className="text-[19px] font-semibold leading-normal text-text">
+        <h3 className="text-[18px] font-semibold leading-[1.59] text-text lg:text-[19px] lg:leading-normal">
           {article.title}
         </h3>
-        <p className="line-clamp-3 text-[13px] font-medium leading-[1.714] text-text-muted">
+        <p className="line-clamp-3 text-[14px] font-medium leading-[1.635] text-text-muted lg:text-[13px] lg:leading-[1.714]">
           {article.summary}
         </p>
       </div>
