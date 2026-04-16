@@ -19,12 +19,12 @@ export function ArticleDetailView({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -12 }}
       transition={{ duration: 0.25 }}
-      className="flex w-full flex-col gap-10"
+      className="flex w-full flex-col gap-7.5 lg:gap-10"
     >
       <BackButton onClick={onBack} />
 
-      <article className="flex w-full max-w-[994px] flex-col gap-10 rounded-xl border border-white/5 bg-card-alt px-5 py-[30px] sm:px-5">
-        <h1 className="max-w-[500px] text-[22px] font-semibold leading-[1.091] text-text">
+      <article className="flex w-full flex-col gap-7.5 rounded-xl border border-white/5 bg-card-alt p-4 lg:max-w-248.5 lg:gap-10 lg:px-5 lg:py-7.5">
+        <h1 className="text-[18px] font-semibold leading-[1.333] text-text lg:max-w-125 lg:text-[22px] lg:leading-[1.091]">
           {article.title}
         </h1>
 
@@ -34,7 +34,7 @@ export function ArticleDetailView({
               return (
                 <h2
                   key={index}
-                  className="text-[22px] font-semibold leading-[1.091] text-text"
+                  className="text-[18px] font-semibold leading-[1.333] text-text lg:text-[22px] lg:leading-[1.091]"
                 >
                   {block.text}
                 </h2>
@@ -51,10 +51,7 @@ export function ArticleDetailView({
               );
             }
             return (
-              <figure
-                key={index}
-                className="overflow-hidden rounded-lg border border-white/5 bg-card"
-              >
+              <figure key={index} className="overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={block.src} alt={block.alt} className="w-full" />
               </figure>

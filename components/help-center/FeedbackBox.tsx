@@ -27,13 +27,13 @@ export function FeedbackBox({
   return (
     <div
       key={articleSlug}
-      className="flex w-full max-w-[994px] flex-col items-center gap-6 rounded-lg border border-white/5 bg-card-alt py-5 text-center"
+      className="flex w-full flex-col items-center gap-6 rounded-lg border border-white/5 bg-card-alt py-6 text-center lg:max-w-248.5"
     >
-      <div className="flex flex-col items-center gap-4">
-        <h3 className="max-w-[779px] text-[18px] font-semibold leading-[2.222] text-text">
+      <div className="flex max-w-67.5 flex-col items-center gap-4 lg:max-w-none">
+        <h3 className="text-[18px] font-semibold leading-[2.222] text-text lg:max-w-194.75">
           Bu İçeriği Faydalı Buldunuz mu?
         </h3>
-        <p className="max-w-[534px] text-[15px] font-medium leading-[1.6] text-text-muted">
+        <p className="text-[14px] font-medium leading-[1.714] text-text-muted lg:max-w-133.5 lg:text-[15px] lg:leading-[1.6]">
           Geri bildiriminiz, Yardım Merkezi içeriklerini sizin için daha iyi
           hale getirmemize yardımcı olur.
         </p>
