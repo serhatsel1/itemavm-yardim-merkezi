@@ -102,6 +102,14 @@ export const GridIcon = (props: IconProps) => (
   </svg>
 );
 
+export const EmptySearchIcon = (props: IconProps) => (
+  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <circle cx="35" cy="35" r="24" stroke="#C2C2C2" strokeWidth="3" />
+    <path d="M53 53l16 16" stroke="#C2C2C2" strokeWidth="3" strokeLinecap="round" />
+    <path d="M28 30h14M28 38h8" stroke="#C2C2C2" strokeWidth="2.5" strokeLinecap="round" />
+  </svg>
+);
+
 /* ── Raster Icons (PNG — from Figma assets) ── */
 
 const ICON_SRC: Record<ArticleIconKey, string> = {

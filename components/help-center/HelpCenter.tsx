@@ -6,7 +6,7 @@ import type { Article, Category, HelpCenterData } from "@/lib/types";
 import { useHashRoute } from "@/lib/hooks/useHashRoute";
 import { useArticleSearch } from "@/lib/hooks/useArticleSearch";
 import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
-import { ChevronDownIcon, GridIcon, SearchIcon } from "@/components/icons";
+import { ChevronDownIcon, CloseIcon, GridIcon, SearchIcon } from "@/components/icons";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { HomeView } from "./HomeView";
@@ -58,8 +58,10 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
   useEffect(() => {
     if (isFiltered) {
       setExpandedIds(new Set(filteredCategories.map((c) => c.id)));
+    } else {
+      setExpandedIds(match?.category ? new Set([match.category.id]) : new Set());
     }
-  }, [isFiltered, filteredCategories]);
+  }, [isFiltered, filteredCategories, match]);
 
   const handleToggleCategory = useCallback((id: string) => {
     setExpandedIds((prev) => {
@@ -72,6 +74,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
 
   const handleSelectArticle = useCallback(
     (slug: string) => {
+      setQuery("");
       setActiveSlug(slug);
       if (typeof window !== "undefined") {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -97,6 +100,8 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
         <HomeView
           key="home"
           categories={filteredCategories}
+          allData={data}
+          query={debouncedQuery}
           onOpenArticle={handleSelectArticle}
           isFiltered={isFiltered}
           isSearching={isSearching}
@@ -111,8 +116,8 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
       <div className="min-h-screen bg-bg px-4 pb-6 pt-4.75 lg:hidden">
         <div className="flex flex-col gap-5">
           {/* Search bar */}
-          <label className="relative flex h-14 items-center rounded-lg border border-white/10 bg-panel px-4">
-            <SearchIcon className="h-4.5 w-4.5 text-white" />
+          <div className="relative flex h-14 items-center rounded-lg border border-white/10 bg-panel px-4">
+            <SearchIcon className="h-4.5 w-4.5 shrink-0 text-white" />
             <input
               type="text"
               value={query}
@@ -121,7 +126,17 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
               className="ml-3 w-full bg-transparent text-[15px] leading-[1.16] text-white placeholder:text-white focus:outline-none"
               aria-label="Makalelerde ara"
             />
-          </label>
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                className="ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-text-muted transition-colors hover:bg-white/20 hover:text-text"
+                aria-label="Aramayı temizle"
+              >
+                <CloseIcon className="h-2.5 w-2.5" />
+              </button>
+            )}
+          </div>
 
           {/* Kategoriler trigger */}
           <button

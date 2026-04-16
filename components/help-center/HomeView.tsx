@@ -1,19 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { Category } from "@/lib/types";
+import type { Category, HelpCenterData } from "@/lib/types";
 import { HeroQuestionIllustration } from "@/components/icons";
 import { ArticleCard } from "./ArticleCard";
 import { LiveSupportButton } from "./LiveSupportButton";
 import { CardGridSkeleton } from "./Skeleton";
+import { EmptySearchState } from "./EmptySearchState";
 
 export function HomeView({
   categories,
+  allData,
+  query,
   onOpenArticle,
   isFiltered,
   isSearching,
 }: {
   categories: Category[];
+  allData: HelpCenterData;
+  query: string;
   onOpenArticle: (slug: string) => void;
   isFiltered: boolean;
   isSearching: boolean;
@@ -45,7 +50,7 @@ export function HomeView({
         </div>
       )}
 
-      {isFiltered && !isSearching && (
+      {isFiltered && !isSearching && articles.length > 0 && (
         <p className="text-[14px] text-text-muted">
           {articles.length} sonuç bulundu
         </p>
@@ -53,15 +58,12 @@ export function HomeView({
 
       {isSearching ? (
         <CardGridSkeleton count={6} />
-      ) : articles.length === 0 ? (
-        <div className="flex flex-col items-center gap-2 py-10 text-center">
-          <p className="text-[18px] font-semibold text-text">
-            Sonuç bulunamadı
-          </p>
-          <p className="text-[14px] text-text-muted">
-            Farklı bir anahtar kelime ile aramayı deneyin.
-          </p>
-        </div>
+      ) : articles.length === 0 && isFiltered ? (
+        <EmptySearchState
+          query={query}
+          data={allData}
+          onOpenArticle={onOpenArticle}
+        />
       ) : (
         <div className="grid w-full grid-cols-1 gap-3.75 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
           {articles.map((article) => (
