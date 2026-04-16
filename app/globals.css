@@ -20,10 +20,16 @@
 
 html,
 body {
-  background: var(--color-panel);
+  background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 1024px) {
+  body {
+    background: var(--color-panel);
+  }
 }
 
 ::selection {
@@ -39,7 +45,7 @@ input[type="checkbox"],
 input[type="radio"],
 select,
 summary {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 /* Subtle scrollbar for sidebar */

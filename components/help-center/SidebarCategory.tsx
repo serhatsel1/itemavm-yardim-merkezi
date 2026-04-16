@@ -27,7 +27,7 @@ export function SidebarCategory({
         className="flex w-full items-center justify-between gap-3 rounded-lg p-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         <span className="flex items-center gap-2.5">
-          <CategoryIcon icon={category.icon} className="h-6 w-6" />
+          <CategoryIcon icon={category.icon} className="h-6 w-6 object-contain" />
           <span className="text-[16px] font-semibold leading-normal tracking-[-0.006em] text-text">
             {category.title}
           </span>

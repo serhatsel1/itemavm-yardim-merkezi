@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Article, Category, HelpCenterData } from "@/lib/types";
 import { useHashRoute } from "@/lib/hooks/useHashRoute";
 import { useArticleSearch } from "@/lib/hooks/useArticleSearch";
+import { ChevronDownIcon, GridIcon, SearchIcon } from "@/components/icons";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { HomeView } from "./HomeView";
@@ -39,7 +40,6 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
 
   const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set());
 
-  // Auto-expand category of active article
   useEffect(() => {
     if (match?.category) {
       setExpandedIds((prev) => {
@@ -51,7 +51,6 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
     }
   }, [match]);
 
-  // While searching, expand all filtered categories
   useEffect(() => {
     if (isFiltered) {
       setExpandedIds(new Set(filteredCategories.map((c) => c.id)));
@@ -81,12 +80,77 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
     setActiveSlug(null);
   }, [setActiveSlug]);
 
-  return (
-    <div className="min-h-screen w-full bg-panel">
-      <Header onOpenMobileSidebar={() => setMobileOpen(true)} />
+  /* ── Shared content ── */
+  const content = (
+    <AnimatePresence mode="wait">
+      {activeArticle ? (
+        <ArticleDetailView
+          key={`detail-${activeArticle.slug}`}
+          article={activeArticle}
+          onBack={handleBackHome}
+        />
+      ) : (
+        <HomeView
+          key="home"
+          categories={filteredCategories}
+          onOpenArticle={handleSelectArticle}
+          isFiltered={isFiltered}
+        />
+      )}
+    </AnimatePresence>
+  );
 
-      <div className="flex flex-col gap-5 p-4 sm:p-5 lg:flex-row lg:gap-5 lg:p-5">
-        <div className="hidden lg:block">
+  return (
+    <div className="min-h-screen w-full">
+      {/* ── Mobile ── */}
+      <div className="min-h-screen bg-bg px-4 pb-6 pt-4.75 lg:hidden">
+        <div className="flex flex-col gap-5">
+          {/* Search bar */}
+          <label className="relative flex h-14 items-center rounded-lg border border-white/10 bg-panel px-4">
+            <SearchIcon className="h-4.5 w-4.5 text-white" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Ara.."
+              className="ml-3 w-full bg-transparent text-[15px] leading-[1.16] text-white placeholder:text-white focus:outline-none"
+              aria-label="Makalelerde ara"
+            />
+          </label>
+
+          {/* Kategoriler trigger */}
+          <button
+            type="button"
+            onClick={() => setMobileOpen(true)}
+            className="flex items-center justify-between rounded-lg border border-white/5 bg-panel p-4"
+          >
+            <span className="flex items-center gap-2.5">
+              <GridIcon className="h-6 w-6 text-white" />
+              <span className="text-[16px] font-semibold leading-normal tracking-[-0.006em] text-white">
+                Kategoriler
+              </span>
+            </span>
+            <ChevronDownIcon className="h-7.5 w-7.5 -rotate-90 text-text-muted" />
+          </button>
+
+          {/* Main panel: header + body */}
+          <div>
+            <div className="rounded-t-lg border-b border-border-soft bg-panel px-6 py-5">
+              <h2 className="text-[16px] font-bold leading-[1.3] text-white">
+                Yardım Merkezi
+              </h2>
+            </div>
+            <div className="rounded-b-lg bg-panel p-4">
+              {content}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Desktop ── */}
+      <div className="hidden min-h-screen bg-panel lg:block">
+        <Header />
+        <div className="flex min-h-[calc(100vh-66px)] items-stretch gap-5 p-5">
           <Sidebar
             categories={filteredCategories}
             query={query}
@@ -96,48 +160,11 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
             activeSlug={activeSlug}
             onSelectArticle={handleSelectArticle}
           />
+          <div className="w-0.5 shrink-0 rounded-[63px] bg-border-soft" />
+          <main className="flex min-w-0 flex-1 justify-center">
+            {content}
+          </main>
         </div>
-
-        <div className="hidden w-0.5 shrink-0 self-stretch rounded-[63px] bg-border-soft lg:block" />
-
-        {/* Mobile: search + trigger */}
-        <div className="flex flex-col gap-3 lg:hidden">
-          <Sidebar
-            categories={[]}
-            query={query}
-            onQueryChange={setQuery}
-            expandedIds={expandedIds}
-            onToggleCategory={handleToggleCategory}
-            activeSlug={activeSlug}
-            onSelectArticle={handleSelectArticle}
-          />
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-card px-4 py-3 text-[14px] font-medium text-text"
-          >
-            Kategorileri Görüntüle
-          </button>
-        </div>
-
-        <main className="flex min-w-0 flex-1 justify-center">
-          <AnimatePresence mode="wait">
-            {activeArticle ? (
-              <ArticleDetailView
-                key={`detail-${activeArticle.slug}`}
-                article={activeArticle}
-                onBack={handleBackHome}
-              />
-            ) : (
-              <HomeView
-                key="home"
-                categories={filteredCategories}
-                onOpenArticle={handleSelectArticle}
-                isFiltered={isFiltered}
-              />
-            )}
-          </AnimatePresence>
-        </main>
       </div>
 
       <MobileCategoryDrawer

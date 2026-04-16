@@ -35,7 +35,7 @@ export function Sidebar({
         />
       </label>
 
-      <div className="flex flex-col gap-4 lg:max-h-[calc(100vh-200px)] lg:overflow-y-auto lg:scrollbar-thin">
+      <div className="flex flex-col gap-4">
         {categories.length === 0 ? (
           <p className="rounded-lg border border-white/5 bg-card p-4 text-[14px] text-text-muted">
             Sonuç bulunamadı.

@@ -9,10 +9,10 @@ export function BackButton({ onClick }: { onClick: () => void }) {
       type="button"
       onClick={onClick}
       whileHover={{ x: -2 }}
-      className="inline-flex h-[42px] w-fit items-center gap-1.5 rounded-lg border border-white/10 bg-border-soft px-4 text-[14px] font-semibold leading-[1.193] text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="inline-flex h-10.5 w-fit items-center gap-1.5 rounded-lg border border-white/10 bg-border-soft px-4 text-[14px] font-semibold leading-[1.193] text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
-      <ArrowLeftIcon className="h-[18px] w-[18px]" />
-      Geri Dön
+      <ArrowLeftIcon className="h-4.5 w-4.5" />
+      <span className="hidden sm:inline">Geri Dön</span>
     </motion.button>
   );
 }
