@@ -67,8 +67,8 @@ export function ArticleDetailView({
       </article>
 
       <FeedbackBox
-        baseYes={Math.max(1, Math.round(article.likes / 50))}
-        baseNo={Math.max(0, Math.round(article.dislikes / 10))}
+        initialYesCount={Math.max(1, Math.round(article.likes / 50))}
+        initialNoCount={Math.max(0, Math.round(article.dislikes / 10))}
       />
     </motion.div>
   );

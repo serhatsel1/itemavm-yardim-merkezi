@@ -8,19 +8,19 @@ import { DislikeIcon, LikeIcon } from "@/components/icons";
 type Choice = "yes" | "no" | null;
 
 export function FeedbackBox({
-  baseYes,
-  baseNo,
+  initialYesCount,
+  initialNoCount,
 }: {
-  baseYes: number;
-  baseNo: number;
+  initialYesCount: number;
+  initialNoCount: number;
 }) {
   const [choice, setChoice] = useState<Choice>(null);
 
   const toggle = (next: Exclude<Choice, null>) =>
     setChoice((prev) => (prev === next ? null : next));
 
-  const yesCount = baseYes + (choice === "yes" ? 1 : 0);
-  const noCount = baseNo + (choice === "no" ? 1 : 0);
+  const yesCount = initialYesCount + (choice === "yes" ? 1 : 0);
+  const noCount = initialNoCount + (choice === "no" ? 1 : 0);
 
   return (
     <div

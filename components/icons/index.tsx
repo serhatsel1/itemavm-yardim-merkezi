@@ -1,4 +1,4 @@
-import type { SVGProps } from "react";
+import { useId, type SVGProps } from "react";
 import Image from "next/image";
 import type { ArticleIconKey } from "@/lib/types";
 
@@ -68,20 +68,24 @@ export const CloseIcon = (props: IconProps) => (
   </svg>
 );
 
-export const GridIcon = (props: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <defs>
-      <linearGradient id="grid-grad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stopColor="#9CFF9C" />
-        <stop offset="100%" stopColor="#00B59C" />
-      </linearGradient>
-    </defs>
-    <rect x="1.5" y="1.5" width="9" height="9" rx="2" fill="url(#grid-grad)" />
-    <rect x="13.5" y="1.5" width="9" height="9" rx="2" fill="url(#grid-grad)" />
-    <rect x="1.5" y="13.5" width="9" height="9" rx="2" fill="url(#grid-grad)" />
-    <rect x="13.5" y="13.5" width="9" height="9" rx="2" fill="url(#grid-grad)" />
-  </svg>
-);
+export function GridIcon(props: IconProps) {
+  const id = useId();
+  const gradId = `grid-grad-${id}`;
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <defs>
+        <linearGradient id={gradId} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#9CFF9C" />
+          <stop offset="100%" stopColor="#00B59C" />
+        </linearGradient>
+      </defs>
+      <rect x="1.5" y="1.5" width="9" height="9" rx="2" fill={`url(#${gradId})`} />
+      <rect x="13.5" y="1.5" width="9" height="9" rx="2" fill={`url(#${gradId})`} />
+      <rect x="1.5" y="13.5" width="9" height="9" rx="2" fill={`url(#${gradId})`} />
+      <rect x="13.5" y="13.5" width="9" height="9" rx="2" fill={`url(#${gradId})`} />
+    </svg>
+  );
+}
 
 export const EmptySearchIcon = (props: IconProps) => (
   <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>

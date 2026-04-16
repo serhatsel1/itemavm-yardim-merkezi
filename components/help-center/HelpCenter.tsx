@@ -6,9 +6,10 @@ import type { Article, Category, HelpCenterData } from "@/lib/types";
 import { useHashRoute } from "@/lib/hooks/useHashRoute";
 import { useArticleSearch } from "@/lib/hooks/useArticleSearch";
 import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
-import { ChevronDownIcon, CloseIcon, GridIcon, SearchIcon } from "@/components/icons";
+import { ChevronDownIcon, GridIcon } from "@/components/icons";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
+import { SearchInput } from "./SearchInput";
 import { HomeView } from "./HomeView";
 import { ArticleDetailView } from "./ArticleDetailView";
 import { MobileCategoryDrawer } from "./MobileCategoryDrawer";
@@ -61,9 +62,9 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
   const activeArticle: Article | null = match?.article ?? null;
 
   // Invalid hash → clear and fall back to home
-  if (activeSlug && !activeArticle) {
-    setActiveSlug(null);
-  }
+  useEffect(() => {
+    if (activeSlug && !match) setActiveSlug(null);
+  }, [activeSlug, match, setActiveSlug]);
 
   const autoExpandedIds = useMemo(() => {
     if (isFiltered) return new Set(filteredCategories.map((c) => c.id));
@@ -76,9 +77,9 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
     userToggled: new Set<string>(),
   });
 
-  if (expandState.auto !== autoExpandedIds) {
+  useEffect(() => {
     dispatchExpand({ type: "sync", auto: autoExpandedIds });
-  }
+  }, [autoExpandedIds]);
 
   const expandedIds = useMemo(() => {
     const merged = new Set(expandState.auto);
@@ -128,7 +129,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
         <HomeView
           key="home"
           categories={filteredCategories}
-          allData={data}
+          helpCenterData={data}
           query={debouncedQuery}
           onOpenArticle={handleSelectArticle}
           isFiltered={isFiltered}
@@ -143,28 +144,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
       {/* ── Mobile ── */}
       <div className="min-h-screen bg-bg px-4 pb-6 pt-4.75 lg:hidden">
         <div className="flex flex-col gap-5">
-          {/* Search bar */}
-          <div className="relative flex h-14 items-center rounded-lg border border-white/10 bg-panel px-4">
-            <SearchIcon className="h-4.5 w-4.5 shrink-0 text-white" />
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Ara.."
-              className="ml-3 w-full bg-transparent text-[15px] leading-[1.16] text-white placeholder:text-white focus:outline-none"
-              aria-label="Makalelerde ara"
-            />
-            {query && (
-              <button
-                type="button"
-                onClick={() => setQuery("")}
-                className="ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-text-muted transition-colors hover:bg-white/20 hover:text-text"
-                aria-label="Aramayı temizle"
-              >
-                <CloseIcon className="h-2.5 w-2.5" />
-              </button>
-            )}
-          </div>
+          <SearchInput value={query} onChange={setQuery} className="bg-panel" />
 
           {/* Kategoriler trigger */}
           <button

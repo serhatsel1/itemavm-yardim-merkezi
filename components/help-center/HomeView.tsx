@@ -5,19 +5,19 @@ import type { Category, HelpCenterData } from "@/lib/types";
 import { HeroQuestionIllustration } from "@/components/icons";
 import { ArticleCard } from "./ArticleCard";
 import { LiveSupportButton } from "./LiveSupportButton";
-import { CardGridSkeleton } from "./Skeleton";
+import { CARD_GRID_CLASS, CardGridSkeleton } from "./Skeleton";
 import { EmptySearchState } from "./EmptySearchState";
 
 export function HomeView({
   categories,
-  allData,
+  helpCenterData,
   query,
   onOpenArticle,
   isFiltered,
   isSearching,
 }: {
   categories: Category[];
-  allData: HelpCenterData;
+  helpCenterData: HelpCenterData;
   query: string;
   onOpenArticle: (slug: string) => void;
   isFiltered: boolean;
@@ -61,11 +61,11 @@ export function HomeView({
       ) : articles.length === 0 && isFiltered ? (
         <EmptySearchState
           query={query}
-          data={allData}
+          helpCenterData={helpCenterData}
           onOpenArticle={onOpenArticle}
         />
       ) : (
-        <div className="grid w-full grid-cols-1 gap-3.75 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
+        <div className={CARD_GRID_CLASS}>
           {articles.map((article) => (
             <ArticleCard
               key={article.id}

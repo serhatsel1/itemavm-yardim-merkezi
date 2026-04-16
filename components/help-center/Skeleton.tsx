@@ -1,5 +1,8 @@
 import clsx from "clsx";
 
+export const CARD_GRID_CLASS =
+  "grid w-full grid-cols-1 gap-3.75 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6";
+
 function Bone({ className }: { className?: string }) {
   return (
     <div
@@ -68,7 +71,7 @@ export function HomeViewSkeleton() {
       </div>
 
       {/* Card grid skeleton */}
-      <div className="grid w-full grid-cols-1 gap-3.75 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
+      <div className={CARD_GRID_CLASS}>
         {Array.from({ length: 6 }).map((_, i) => (
           <ArticleCardSkeleton key={i} />
         ))}
@@ -94,7 +97,7 @@ export function SidebarSkeleton() {
 
 export function CardGridSkeleton({ count = 6 }: { count?: number }) {
   return (
-    <div className="grid w-full grid-cols-1 gap-3.75 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
+    <div className={CARD_GRID_CLASS}>
       {Array.from({ length: count }).map((_, i) => (
         <ArticleCardSkeleton key={i} />
       ))}

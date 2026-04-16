@@ -1,7 +1,10 @@
+import { useMemo } from "react";
 import type { Article, HelpCenterData } from "@/lib/types";
 import { EmptySearchIcon } from "@/components/icons";
 
-function getPopularArticles(data: HelpCenterData, limit = 3): Article[] {
+const SUGGESTION_COUNT = 3;
+
+function getPopularArticles(data: HelpCenterData, limit: number): Article[] {
   return data.categories
     .flatMap((c) => c.articles)
     .sort((a, b) => b.views - a.views)
@@ -10,14 +13,17 @@ function getPopularArticles(data: HelpCenterData, limit = 3): Article[] {
 
 export function EmptySearchState({
   query,
-  data,
+  helpCenterData,
   onOpenArticle,
 }: {
   query: string;
-  data: HelpCenterData;
+  helpCenterData: HelpCenterData;
   onOpenArticle: (slug: string) => void;
 }) {
-  const suggestions = getPopularArticles(data);
+  const suggestions = useMemo(
+    () => getPopularArticles(helpCenterData, SUGGESTION_COUNT),
+    [helpCenterData]
+  );
 
   return (
     <div className="flex w-full flex-col items-center gap-8 py-6">

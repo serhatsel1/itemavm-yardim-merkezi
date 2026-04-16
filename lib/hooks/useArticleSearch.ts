@@ -1,11 +1,10 @@
 "use client";
 
 import { useMemo } from "react";
-import type { Article, Category } from "@/lib/types";
+import type { Category } from "@/lib/types";
 
 export interface ArticleSearchResult {
   filteredCategories: Category[];
-  flatArticles: Article[];
   isFiltered: boolean;
 }
 
@@ -24,8 +23,7 @@ export function useArticleSearch(
     const isFiltered = trimmed.length > 0;
 
     if (!isFiltered) {
-      const flat = categories.flatMap((c) => c.articles);
-      return { filteredCategories: categories, flatArticles: flat, isFiltered };
+      return { filteredCategories: categories, isFiltered };
     }
 
     const needle = normalize(trimmed);
@@ -42,7 +40,6 @@ export function useArticleSearch(
       })
       .filter((c): c is Category => c !== null);
 
-    const flatArticles = filteredCategories.flatMap((c) => c.articles);
-    return { filteredCategories, flatArticles, isFiltered };
+    return { filteredCategories, isFiltered };
   }, [categories, query]);
 }

@@ -46,7 +46,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="tr" className={`${plusJakarta.variable}`}>
-      <body className="min-h-screen bg-bg text-text antialiased lg:bg-panel">
+      <body className="min-h-screen antialiased">
         {children}
       </body>
     </html>

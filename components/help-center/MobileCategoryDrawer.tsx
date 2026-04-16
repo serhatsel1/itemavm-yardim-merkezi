@@ -74,7 +74,7 @@ export function MobileCategoryDrawer({
               </button>
 
               {/* Divider */}
-              <div className="mt-4 h-px w-86.5 bg-divider" />
+              <div className="mt-4 h-px w-4/5 bg-divider" />
             </div>
 
             {/* Category list */}
