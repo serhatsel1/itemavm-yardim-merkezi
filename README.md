@@ -4,7 +4,7 @@ Senior Frontend Developer mülakat case'i. Figma'da verilen itemAVM Yardım Merk
 
 ## Canlı Demo
 
-- **Vercel:** _deploy sonrası eklenecek_
+- **Vercel:** https://yardim-merkezi.vercel.app
 - **Lokal:** `http://localhost:3000/yardim-merkezi`
 
 ## Teknolojiler
