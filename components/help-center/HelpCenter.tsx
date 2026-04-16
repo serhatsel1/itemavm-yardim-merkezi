@@ -60,6 +60,11 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
   );
   const activeArticle: Article | null = match?.article ?? null;
 
+  // Invalid hash → clear and fall back to home
+  if (activeSlug && !activeArticle) {
+    setActiveSlug(null);
+  }
+
   const autoExpandedIds = useMemo(() => {
     if (isFiltered) return new Set(filteredCategories.map((c) => c.id));
     if (match?.category) return new Set([match.category.id]);
