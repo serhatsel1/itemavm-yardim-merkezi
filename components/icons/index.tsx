@@ -14,8 +14,8 @@ export const SearchIcon = (props: IconProps) => (
 );
 
 export const ChevronDownIcon = (props: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M4.5 6.75 9 11.25 13.5 6.75" stroke="currentColor" strokeWidth="1.575" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -82,17 +82,23 @@ export const SupportIcon = (props: IconProps) => (
 );
 
 export const CloseIcon = (props: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+  <svg viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M1 1l11 11M12 1 1 12" stroke="currentColor" strokeWidth="1.575" strokeLinecap="round" />
   </svg>
 );
 
 export const GridIcon = (props: IconProps) => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor" />
-    <rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor" />
-    <rect x="3" y="13" width="8" height="8" rx="2" fill="currentColor" />
-    <rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor" />
+    <defs>
+      <linearGradient id="grid-grad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#9CFF9C" />
+        <stop offset="100%" stopColor="#00B59C" />
+      </linearGradient>
+    </defs>
+    <rect x="1.5" y="1.5" width="9" height="9" rx="2" fill="url(#grid-grad)" />
+    <rect x="13.5" y="1.5" width="9" height="9" rx="2" fill="url(#grid-grad)" />
+    <rect x="1.5" y="13.5" width="9" height="9" rx="2" fill="url(#grid-grad)" />
+    <rect x="13.5" y="13.5" width="9" height="9" rx="2" fill="url(#grid-grad)" />
   </svg>
 );
 

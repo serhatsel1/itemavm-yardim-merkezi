@@ -130,7 +130,9 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
                 Kategoriler
               </span>
             </span>
-            <ChevronDownIcon className="h-7.5 w-7.5 -rotate-90 text-text-muted" />
+            <span className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-card">
+              <ChevronDownIcon className="h-4.5 w-4.5 rotate-180 text-text-muted" />
+            </span>
           </button>
 
           {/* Main panel: header + body */}
