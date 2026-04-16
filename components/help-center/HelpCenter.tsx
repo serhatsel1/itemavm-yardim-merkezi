@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence } from "framer-motion";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import type { Article, Category, HelpCenterData } from "@/lib/types";
 import { useHashRoute } from "@/lib/hooks/useHashRoute";
 import { useArticleSearch } from "@/lib/hooks/useArticleSearch";
@@ -12,6 +12,24 @@ import { Sidebar } from "./Sidebar";
 import { HomeView } from "./HomeView";
 import { ArticleDetailView } from "./ArticleDetailView";
 import { MobileCategoryDrawer } from "./MobileCategoryDrawer";
+
+type ExpandAction =
+  | { type: "toggle"; id: string }
+  | { type: "sync"; auto: Set<string> };
+
+function expandReducer(
+  state: { auto: Set<string>; userToggled: Set<string> },
+  action: ExpandAction
+) {
+  if (action.type === "toggle") {
+    const next = new Set(state.userToggled);
+    if (next.has(action.id)) next.delete(action.id);
+    else next.add(action.id);
+    return { ...state, userToggled: next };
+  }
+  // sync: auto changed, reset user toggles
+  return { auto: action.auto, userToggled: new Set<string>() };
+}
 
 function findArticle(categories: Category[], slug: string | null) {
   if (!slug) return null;
@@ -42,35 +60,40 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
   );
   const activeArticle: Article | null = match?.article ?? null;
 
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set());
-
-  useEffect(() => {
-    if (match?.category) {
-      setExpandedIds((prev) => {
-        if (prev.has(match.category.id)) return prev;
-        const next = new Set(prev);
-        next.add(match.category.id);
-        return next;
-      });
-    }
-  }, [match]);
-
-  useEffect(() => {
-    if (isFiltered) {
-      setExpandedIds(new Set(filteredCategories.map((c) => c.id)));
-    } else {
-      setExpandedIds(match?.category ? new Set([match.category.id]) : new Set());
-    }
+  const autoExpandedIds = useMemo(() => {
+    if (isFiltered) return new Set(filteredCategories.map((c) => c.id));
+    if (match?.category) return new Set([match.category.id]);
+    return new Set<string>();
   }, [isFiltered, filteredCategories, match]);
 
-  const handleToggleCategory = useCallback((id: string) => {
-    setExpandedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
+  const [expandState, dispatchExpand] = useReducer(expandReducer, {
+    auto: autoExpandedIds,
+    userToggled: new Set<string>(),
+  });
+
+  if (expandState.auto !== autoExpandedIds) {
+    dispatchExpand({ type: "sync", auto: autoExpandedIds });
+  }
+
+  const expandedIds = useMemo(() => {
+    const merged = new Set(expandState.auto);
+    expandState.userToggled.forEach((id) => {
+      if (merged.has(id)) merged.delete(id);
+      else merged.add(id);
     });
-  }, []);
+    return merged;
+  }, [expandState]);
+
+  useEffect(() => {
+    document.title = activeArticle
+      ? `${activeArticle.title} — itemAVM Yardım Merkezi`
+      : "itemAVM Yardım Merkezi";
+  }, [activeArticle]);
+
+  const handleToggleCategory = useCallback(
+    (id: string) => dispatchExpand({ type: "toggle", id }),
+    []
+  );
 
   const handleSelectArticle = useCallback(
     (slug: string) => {

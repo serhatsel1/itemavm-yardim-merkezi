@@ -1,13 +1,13 @@
 # itemAVM Yardım Merkezi — Frontend Case
 
-Senior Frontend Developer mülakat case'i. Figma'da verilen itemAVM Yardım Merkezi tasarımı, **Next.js 16 App Router** üzerinde birebir implement edildi.
+Senior Frontend Developer mülakat case'i. Figma'da verilen itemAVM Yardım Merkezi tasarımı, **Next.js 16 App Router** üzerinde pixel-perfect implement edildi.
 
-## 🚀 Canlı Demo
+## Canlı Demo
 
 - **Vercel:** _deploy sonrası eklenecek_
 - **Lokal:** `http://localhost:3000/yardim-merkezi`
 
-## 🛠️ Teknolojiler
+## Teknolojiler
 
 | Katman    | Tercih                                   |
 | --------- | ---------------------------------------- |
@@ -20,94 +20,89 @@ Senior Frontend Developer mülakat case'i. Figma'da verilen itemAVM Yardım Merk
 
 > **Not:** Figma'da Gilroy kullanılmış. Gilroy lisanslı bir font olduğu için açık alternatifi olan **Plus Jakarta Sans** tercih edildi. Tipografi ölçüleri ve ağırlıkları birebir uygulandı.
 
-## 📂 Proje Yapısı
+## Proje Yapısı
 
 ```
 app/
   layout.tsx                 # Root layout, fontlar, metadata
   page.tsx                   # /  →  /yardim-merkezi (redirect)
+  globals.css                # Tailwind v4 tema + global stiller
   yardim-merkezi/page.tsx    # Server component — JSON import
 components/
   help-center/
-    HelpCenter.tsx           # Client root: hash + search + view switching
-    Header.tsx
+    HelpCenter.tsx           # Client root: hash routing + search + view switching
+    Header.tsx               # Desktop header bar
     Sidebar.tsx              # Arama + accordion kategori listesi
     SidebarCategory.tsx      # Tek kategori accordion
     HomeView.tsx             # Hero + CTA + makale grid
     ArticleDetailView.tsx    # Detay içerik + feedback
-    ArticleCard.tsx
-    StatPill.tsx
-    LiveSupportButton.tsx
-    BackButton.tsx
-    FeedbackBox.tsx          # Local-state Evet/Hayır
-    MobileCategoryDrawer.tsx # Mobil drawer (Figma'daki "Kategoriler Modal")
-  icons/index.tsx            # Inline SVG ikonlar + kategori görselleri
+    ArticleCard.tsx          # Makale kartı
+    StatPill.tsx             # Görüntülenme/beğeni pill'leri
+    LiveSupportButton.tsx    # Canlı destek CTA butonu
+    BackButton.tsx           # Geri dön butonu
+    FeedbackBox.tsx          # "Faydalı buldunuz mu?" — local state
+    EmptySearchState.tsx     # Sonuç yok + popüler öneriler
+    Skeleton.tsx             # Loading skeleton bileşenleri
+    MobileCategoryDrawer.tsx # Mobil bottom sheet modal
+  icons/index.tsx            # SVG UI ikonlar + PNG kategori görselleri
 lib/
   hooks/
-    useHashRoute.ts          # hash sync + history API
+    useHashRoute.ts          # Hash sync + History API
     useArticleSearch.ts      # Türkçe-uyumlu normalize'lı filtre
-  types.ts
+    useDebouncedValue.ts     # Generic debounce hook (300ms)
+  types.ts                   # TypeScript tip tanımları
 data/
   helpCenter.json            # 4 kategori · 10 makale
+public/
+  icons/                     # Figma'dan export edilen PNG assetler
 ```
 
-## 🧠 Mimari Kararlar
+## Mimari Kararlar
 
 ### 1. Hash-Based Routing
 
 Case gereği detay sayfaları **hash (`#slug`)** ile yönetiliyor. `useHashRoute` hook'u:
 
 - `window.location.hash`'i okuyup state'e senkronize eder
-- Detay açarken `history.pushState` ile URL'yi günceller → tarayıcı geri/ileri doğru çalışır
-- `hashchange` eventini dinler → manuel URL değişimlerine hemen tepki verir
+- `history.pushState` ile URL günceller — tarayıcı geri/ileri doğru çalışır
+- `hashchange` eventini dinler — manuel URL değişimlerine tepki verir
 - SSR-safe: ilk render'da `null`, mount sonrası hydrate
-- **Deep linking:** `/yardim-merkezi#stoklu-ilan-nasil-eklenir` ile doğrudan açılabilir
+- **Deep linking:** `/yardim-merkezi#stoklu-ilan-nasil-eklenir` doğrudan açılır
+- Makale açıkken `document.title` dinamik güncellenir
 
-### 2. Arama
+### 2. Arama (Debounced)
 
-`useArticleSearch` hook'u **Türkçe-uyumlu normalize** (büyük/küçük harf + diakritik) ile hem başlık hem özet üzerinden filtreler. Filtrelenen veri **hem sidebar hem grid için aynı** — tek kaynak. Arama aktifken tüm filtrelenmiş kategoriler otomatik expand olur.
+`useArticleSearch` hook'u **Türkçe-uyumlu normalize** (büyük/küçük harf + diakritik) ile hem başlık hem özet üzerinden filtreler. `useDebouncedValue` (300ms) ile gereksiz re-render'lar önlenir. Debounce sırasında **skeleton loading** gösterilir. Filtrelenen veri hem sidebar hem grid için tek kaynak.
 
 ### 3. Sidebar Senkronizasyonu
 
-- Kategoriler **accordion** (birden fazla aynı anda açık olabilir)
-- Detay görünümündeyken aktif makalenin kategorisi otomatik açılır ve makale highlight'lanır
-- Aktif state: `bg-active text-text`, diğerleri `text-text-muted`
+- Kategoriler accordion — birden fazla aynı anda açık olabilir
+- Detay görünümünde aktif makalenin kategorisi otomatik açılır ve makale highlight'lanır
+- Arama yapılırken tüm eşleşen kategoriler expand olur
+- Arama temizlendiğinde yalnızca aktif makalenin kategorisi açık kalır
 
-### 4. View Switching
+### 4. View Switching + Animasyonlar
 
-`AnimatePresence` ile Home ↔ Detay geçişleri fade + slide.
+`AnimatePresence mode="wait"` ile Home ↔ Detay geçişleri fade + slide. Sidebar accordion'ları `framer-motion` ile animate edilir. Bottom sheet modal spring animasyonla açılır.
 
 ### 5. Feedback Local State
 
-- Her makale için bağımsız (`key={articleSlug}` ile reset)
-- Aynı butona tekrar tıklama seçimi geri alır
-- Görsel olarak Figma'daki yeşil/kırmızı tint tasarımı birebir
+- Her makale için bağımsız (parent `key` ile component remount/reset)
+- Aynı butona tekrar tıklama seçimi geri alır (toggle)
+- Figma'daki yeşil/kırmızı tint tasarımı birebir
+- Not: Geri bildirimler local state'te tutulur, sayfa yenilendiğinde sıfırlanır
 
-### 6. Responsive
+### 6. Responsive (Figma Birebir)
 
-- **Desktop (≥ lg):** iki kolon — sol sidebar (400px) + içerik
-- **Tablet/Mobil:** sidebar drawer'a döner (Figma'daki "Kategoriler Modal" ile uyumlu), grid tek/iki kolona iner
-- Hero metinleri `clamp()` ile akıcı ölçeklenir
+- **Desktop (≥ 1024px):** Full-width panel — sidebar (400px) + divider + içerik
+- **Mobil (< 1024px):** `#121212` arka plan + `#1E1E1F` inset panel + bottom sheet kategori modal
+- Tüm spacing, typography ve renk değerleri Figma'dan pixel-perfect alındı
 
-### 7. Design Token'lar
+### 7. Empty Search State
 
-Tüm renkler `app/globals.css` içinde `@theme inline` blok altında tanımlı. Figma'daki pixel-perfect değerler:
+Arama sonucu boşken: illustration + mesaj + en çok görüntülenen 3 makale önerisi. Kullanıcıyı çıkmaz sokakta bırakmaz.
 
-```css
---color-bg:           #121212
---color-panel:        #1e1e1f
---color-card:         #232323
---color-card-alt:     #262627
---color-border-soft:  #2d2d2f
---color-active:       #393939
---color-text:         #ffffff
---color-text-muted:   #c2c2c2
---color-primary:      #0162ff
---color-success:      #00d02a
---color-danger:       #ff0000
-```
-
-## ✅ Case Gereksinimleri
+## Case Gereksinimleri
 
 - [x] Next.js 16+ App Router
 - [x] Ana sayfa + makale detay görünümü
@@ -124,11 +119,12 @@ Tüm renkler `app/globals.css` içinde `@theme inline` blok altında tanımlı. 
 ### Bonus
 
 - [x] TypeScript (strict)
-- [x] Responsive (Figma mobil varyantına uygun)
-- [x] Framer Motion geçişleri
-- [x] Feedback local state
+- [x] Responsive (Figma mobil varyantına pixel-perfect)
+- [x] Framer Motion geçişleri (sidebar, sayfa, modal)
+- [x] Loading / skeleton state (debounce sırasında)
+- [x] Feedback local state (toggle + reset)
 
-## ▶️ Kurulum ve Çalıştırma
+## Kurulum ve Çalıştırma
 
 ```bash
 npm install
@@ -137,21 +133,19 @@ npm run dev
 
 Tarayıcıda: [http://localhost:3000](http://localhost:3000) (otomatik olarak `/yardim-merkezi`'ye yönlenir.)
 
-## 📦 Build
+## Scripts
 
 ```bash
-npm run build
-npm start
+npm run dev        # Geliştirme sunucusu
+npm run build      # Üretim build
+npm start          # Üretim sunucusu
+npm run lint       # ESLint
+npm run typecheck  # TypeScript kontrol
 ```
 
-## 🚀 Vercel Deploy
+## Notlar
 
-```bash
-npx vercel
-```
-
-## 📝 Notlar
-
-- **Figma assetleri:** Raster kategori görselleri ve hero illustration lisans/erişim nedeniyle **inline SVG** olarak yeniden üretildi. Tasarımdaki gradient dili ve oran/yerleşim korundu.
+- **Figma assetleri:** Kategori ikonları ve hero illustration Figma'dan PNG olarak export edildi. UI ikonlar (search, chevron, like vb.) inline SVG olarak birebir Figma stroke değerleriyle çizildi.
 - **Performans:** Sayfa statik olarak prerender ediliyor; client JS sadece etkileşimli bölümler için yüklenir.
-- **Erişilebilirlik:** Semantic HTML, `aria-*` etiketleri ve focus-visible ring kullanıldı.
+- **Erişilebilirlik:** Semantic HTML, `aria-expanded`, `aria-pressed`, `aria-label` ve `focus-visible` ring kullanıldı.
+- **Feedback:** Local state ile çalışır, persistence (localStorage) eklenmemiştir — case scope'unda bilinçli bir karar.

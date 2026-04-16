@@ -1,22 +1,24 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
-const readHash = (): string | null => {
+function getHash(): string | null {
   if (typeof window === "undefined") return null;
   const raw = window.location.hash.replace(/^#/, "");
   return raw.length > 0 ? decodeURIComponent(raw) : null;
-};
+}
+
+function subscribe(callback: () => void) {
+  window.addEventListener("hashchange", callback);
+  return () => window.removeEventListener("hashchange", callback);
+}
+
+function getServerSnapshot(): string | null {
+  return null;
+}
 
 export function useHashRoute(): [string | null, (slug: string | null) => void] {
-  const [slug, setSlug] = useState<string | null>(null);
-
-  useEffect(() => {
-    setSlug(readHash());
-    const onChange = () => setSlug(readHash());
-    window.addEventListener("hashchange", onChange);
-    return () => window.removeEventListener("hashchange", onChange);
-  }, []);
+  const slug = useSyncExternalStore(subscribe, getHash, getServerSnapshot);
 
   const navigate = useCallback((next: string | null) => {
     if (typeof window === "undefined") return;
@@ -24,7 +26,7 @@ export function useHashRoute(): [string | null, (slug: string | null) => void] {
       ? `${window.location.pathname}${window.location.search}#${encodeURIComponent(next)}`
       : `${window.location.pathname}${window.location.search}`;
     window.history.pushState(null, "", target);
-    setSlug(next);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
   }, []);
 
   return [slug, navigate];

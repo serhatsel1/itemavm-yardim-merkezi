@@ -8,11 +8,9 @@ import { DislikeIcon, LikeIcon } from "@/components/icons";
 type Choice = "yes" | "no" | null;
 
 export function FeedbackBox({
-  articleSlug,
   baseYes,
   baseNo,
 }: {
-  articleSlug: string;
   baseYes: number;
   baseNo: number;
 }) {
@@ -26,7 +24,6 @@ export function FeedbackBox({
 
   return (
     <div
-      key={articleSlug}
       className="flex w-full flex-col items-center gap-6 rounded-lg border border-white/5 bg-card-alt py-6 text-center lg:max-w-248.5"
     >
       <div className="flex max-w-67.5 flex-col items-center gap-4 lg:max-w-none">
