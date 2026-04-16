@@ -15,25 +15,23 @@ export function HomeView({
   onOpenArticle: (slug: string) => void;
   isFiltered: boolean;
 }) {
-  const articles = categories.flatMap((c) =>
-    c.articles.map((a) => ({ article: a, icon: c.icon }))
-  );
+  const articles = categories.flatMap((c) => c.articles);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className="flex w-full flex-1 flex-col items-center gap-[30px] py-6 lg:py-10"
+      className="flex w-full flex-1 flex-col items-center gap-7.5 py-7.5 lg:py-10"
     >
       {!isFiltered && (
-        <div className="flex flex-col items-center gap-10">
-          <HeroQuestionIllustration className="h-[70px] w-[70px]" />
-          <div className="flex max-w-[780px] flex-col items-center gap-6 text-center">
-            <h1 className="text-[clamp(24px,3vw,30px)] font-semibold leading-[1.333] tracking-[-0.006em] text-text">
+        <div className="flex flex-col items-center gap-7.5 lg:gap-10">
+          <HeroQuestionIllustration className="h-15 w-15 lg:h-17.5 lg:w-17.5" />
+          <div className="flex flex-col items-center gap-6 text-center lg:max-w-195">
+            <h1 className="text-[22px] font-semibold leading-[1.818] text-text lg:text-[30px] lg:leading-[1.333] lg:tracking-[-0.006em]">
               Yardım Merkezine Hoş Geldiniz
             </h1>
-            <p className="text-[15px] font-medium leading-[1.6] text-text-muted">
+            <p className="text-[14px] font-medium leading-[1.714] text-text-muted lg:text-[15px] lg:leading-[1.6]">
               Sık sorulan sorulara göz atabilir, işlemlerinizle ilgili hızlıca
               destek alabilir ve aradığınız yanıta kolayca ulaşabilirsiniz.
             </p>
@@ -59,11 +57,10 @@ export function HomeView({
         </div>
       ) : (
         <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-3.75 xl:grid-cols-3 xl:gap-6">
-          {articles.map(({ article, icon }) => (
+          {articles.map((article) => (
             <ArticleCard
               key={article.id}
               article={article}
-              icon={icon}
               onOpen={onOpenArticle}
             />
           ))}

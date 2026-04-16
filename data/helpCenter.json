@@ -9,6 +9,7 @@
           "id": "itemavm-guvenilir-mi",
           "slug": "itemavm-guvenilir-mi",
           "categoryId": "genel-konular",
+          "icon": "payment",
           "title": "itemavm.com güvenilir mi?",
           "summary": "itemAVM güvenlik altyapısı, doğrulanmış satıcılar ve alıcı koruma sistemi hakkında bilmeniz gerekenler.",
           "content": [
@@ -19,6 +20,11 @@
             {
               "type": "paragraph",
               "text": "Sipariş tamamlanana ve alıcı onayı gerçekleşene kadar satıcı ödemesi güvence havuzunda tutulur. Bu sayede olası uyuşmazlıklarda iade ve itiraz süreçleri itemAVM tarafından yönetilir."
+            },
+            {
+              "type": "image",
+              "src": "/icons/article-screenshot.png",
+              "alt": "itemAVM ana sayfa ekran görüntüsü"
             },
             {
               "type": "heading",
@@ -37,6 +43,7 @@
           "id": "size-nasil-ulasabilirim",
           "slug": "size-nasil-ulasabilirim",
           "categoryId": "genel-konular",
+          "icon": "find",
           "title": "Size Nasıl Ulaşabilirim?",
           "summary": "Destek ekibimize e-posta, canlı destek ve yardım merkezi üzerinden nasıl ulaşabileceğinizi öğrenin.",
           "content": [
@@ -57,6 +64,7 @@
           "id": "mail-ve-telefon-onayi",
           "slug": "mail-ve-telefon-onayi",
           "categoryId": "genel-konular",
+          "icon": "software",
           "title": "Üyeliğim için Mail ve Telefon Onayı Nasıl Yapabilirim?",
           "summary": "itemAVM üyeliğinizi aktifleştirmek için e-posta ve telefon doğrulama adımlarını takip edin.",
           "content": [
@@ -84,6 +92,7 @@
           "id": "hangi-odeme-yontemleri",
           "slug": "hangi-odeme-yontemleri-kullanilabilir",
           "categoryId": "odeme-yontemleri",
+          "icon": "money",
           "title": "Hangi Ödeme Yöntemleri Kullanılabilir?",
           "summary": "Kredi kartı, havale/EFT ve dijital cüzdan seçenekleriyle itemAVM üzerinde güvenle alışveriş yapın.",
           "content": [
@@ -104,6 +113,7 @@
           "id": "iade-sureci",
           "slug": "iade-sureci-nasil-isler",
           "categoryId": "odeme-yontemleri",
+          "icon": "info",
           "title": "İade Süreci Nasıl İşler?",
           "summary": "itemAVM iade süreci adım adım: talep oluşturma, onay, kargo ve geri ödeme.",
           "content": [
@@ -139,6 +149,7 @@
           "id": "stoklu-ilan-nasil-eklenir",
           "slug": "stoklu-ilan-nasil-eklenir",
           "categoryId": "yayinci-ekosistemi",
+          "icon": "weapon",
           "title": "Stoklu İlan Nasıl Eklenir?",
           "summary": "Birden fazla adet ürününüzü tek ilan altında yönetmek için stoklu ilan oluşturun.",
           "content": [
@@ -159,6 +170,7 @@
           "id": "manuel-otomatik-teslimat",
           "slug": "manuel-ve-stoktan-otomatik-teslimat-nedir",
           "categoryId": "yayinci-ekosistemi",
+          "icon": "publisher",
           "title": "Manuel ve Stoktan Otomatik Teslimat Nedir?",
           "summary": "Dijital ürün teslimat yöntemleri arasındaki farkları öğrenerek satışlarınızı hızlandırın.",
           "content": [
@@ -187,6 +199,7 @@
           "id": "video-kaydi",
           "slug": "ilan-satislarini-video-kaydina-alma",
           "categoryId": "yayinci-ekosistemi",
+          "icon": "cover-image",
           "title": "İlan Satışlarını Nasıl Video Kaydına Alabilirim?",
           "summary": "Satış süreçlerinizi belgelemek için itemAVM video kayıt özelliğini nasıl kullanacağınızı öğrenin.",
           "content": [
@@ -214,6 +227,7 @@
           "id": "kapak-fotografi-nasil-degistirilir",
           "slug": "kapak-fotografi-nasil-degistirilir",
           "categoryId": "kapak-fotografi",
+          "icon": "find",
           "title": "Kapak Fotoğrafı Nasıl Değiştirilir?",
           "summary": "Mağaza profilinizin kapak görselini güncellemek için adım adım rehber.",
           "content": [
@@ -234,6 +248,7 @@
           "id": "kapak-fotografi-onerilen-boyutlar",
           "slug": "kapak-fotografi-onerilen-boyutlar",
           "categoryId": "kapak-fotografi",
+          "icon": "money",
           "title": "Önerilen Kapak Fotoğrafı Boyutları",
           "summary": "En iyi görünüm için ideal kapak boyutları ve format önerileri.",
           "content": [
