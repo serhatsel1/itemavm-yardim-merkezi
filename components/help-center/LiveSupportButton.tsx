@@ -7,6 +7,7 @@ export function LiveSupportButton() {
   return (
     <motion.button
       type="button"
+      aria-disabled="true"
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className="inline-flex w-65 items-center justify-center rounded-lg bg-primary p-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"

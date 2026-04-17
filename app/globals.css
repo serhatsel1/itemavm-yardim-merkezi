@@ -41,14 +41,14 @@ summary {
   cursor: pointer !important;
 }
 
-/* Subtle scrollbar for sidebar */
-.scrollbar-thin::-webkit-scrollbar {
+/* Global scrollbar */
+*::-webkit-scrollbar {
   width: 6px;
 }
-.scrollbar-thin::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   background: transparent;
 }
-.scrollbar-thin::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background: #2d2d2f;
   border-radius: 999px;
 }

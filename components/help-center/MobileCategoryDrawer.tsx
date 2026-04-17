@@ -78,7 +78,7 @@ export function MobileCategoryDrawer({
             </div>
 
             {/* Category list */}
-            <div className="scrollbar-thin flex-1 overflow-y-auto px-4 pb-8 pt-6">
+            <div className="flex-1 overflow-y-auto px-4 pb-8 pt-6">
               <div className="mx-auto flex w-full max-w-100 flex-col gap-4">
                 {categories.map((category) => (
                   <SidebarCategory

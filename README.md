@@ -104,6 +104,13 @@ data/
   helpCenter.json            # 4 kategori, 10 makale
 ```
 
+## Trade-offs
+
+- Error boundary minimal seviyede eklendi — case scope disinda ama production mindset icin gerekli goruldu.
+- Runtime validation (zod vb.) eklenmedi — veri kaynagi statik JSON dosyasi oldugu icin `as` cast yeterli goruldu.
+- Figma'da Gilroy fontu kullanilmis — lisansli oldugu icin en yakin acik alternatif olan Plus Jakarta Sans tercih edildi.
+- Feedback oylamasinda localStorage persistence eklenmedi — case scope'unda bilinçli olarak birakildi.
+
 ## Notlar
 
 - Figma'daki raster assetler (kategori ikonlari, hero, destek ikonu) PNG olarak export edilip `next/image` ile optimize edilmistir. UI ikonlar (search, chevron, like, dislike, eye) Figma'daki stroke degerleriyle birebir SVG olarak cizilmistir.
