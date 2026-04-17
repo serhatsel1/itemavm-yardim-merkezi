@@ -24,7 +24,7 @@ export function FeedbackBox({
 
   return (
     <div
-      className="flex w-full flex-col items-center gap-6 rounded-lg border border-white/5 bg-card-alt py-6 text-center lg:max-w-248.5"
+      className="flex w-full flex-col items-center gap-6 rounded-lg border border-white/5 bg-card-alt py-6 text-center lg:py-5 lg:max-w-248.5"
     >
       <div className="flex max-w-67.5 flex-col items-center gap-4 lg:max-w-none">
         <h3 className="text-[18px] font-semibold leading-[2.222] text-text lg:max-w-194.75">
@@ -45,7 +45,7 @@ export function FeedbackBox({
             "inline-flex h-[45px] min-w-[130px] items-center justify-center gap-2.5 rounded-lg border px-4 text-[14px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
             choice === "yes"
               ? "border-success bg-success/10 text-success"
-              : "border-success/60 bg-card text-success hover:bg-success/5"
+              : "border-success bg-card text-success hover:bg-success/5"
           )}
         >
           <LikeIcon className="h-[18px] w-[18px]" />
@@ -60,7 +60,7 @@ export function FeedbackBox({
             "inline-flex h-[45px] min-w-[130px] items-center justify-center gap-2.5 rounded-lg border px-4 text-[14px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
             choice === "no"
               ? "border-danger bg-danger/10 text-danger"
-              : "border-danger/60 bg-card text-danger hover:bg-danger/5"
+              : "border-danger bg-card text-danger hover:bg-danger/5"
           )}
         >
           <DislikeIcon className="h-[18px] w-[18px]" />

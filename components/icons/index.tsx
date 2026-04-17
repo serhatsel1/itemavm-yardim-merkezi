@@ -26,38 +26,28 @@ export const ArrowLeftIcon = (props: IconProps) => (
 );
 
 export const EyeIcon = (props: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
-      d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
+      fill="currentColor"
     />
-    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8" />
   </svg>
 );
 
 export const LikeIcon = (props: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
-      d="M7 10v10H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h3Zm0 0 4-7a2.5 2.5 0 0 1 2.5 2.5V9h5.2a2 2 0 0 1 1.98 2.29l-1.1 7a2 2 0 0 1-1.98 1.71H7"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      strokeLinejoin="round"
-      strokeLinecap="round"
+      d="M2 20h2c.55 0 1-.45 1-1v-9c0-.55-.45-1-1-1H2v11Zm19.83-7.12c.11-.25.17-.52.17-.8V11c0-1.1-.9-2-2-2h-5.5l.92-4.65c.05-.22.02-.46-.08-.66a4.8 4.8 0 0 0-.88-1.22L14 2 7.59 8.41C7.21 8.79 7 9.3 7 9.83v7.84A2.33 2.33 0 0 0 9.34 20h8.11c.7 0 1.36-.37 1.72-.97l2.66-6.15Z"
+      fill="currentColor"
     />
   </svg>
 );
 
 export const DislikeIcon = (props: IconProps) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
-      d="M17 14V4h3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-3Zm0 0-4 7a2.5 2.5 0 0 1-2.5-2.5V15H5.3a2 2 0 0 1-1.98-2.29l1.1-7A2 2 0 0 1 6.4 4H17"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      strokeLinejoin="round"
-      strokeLinecap="round"
+      d="M22 4h-2c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h2V4ZM2.17 11.12c-.11.25-.17.52-.17.8V13c0 1.1.9 2 2 2h5.5l-.92 4.65c-.05.22-.02.46.08.66.23.45.52.86.88 1.22L10 22l6.41-6.41c.38-.38.59-.89.59-1.42V6.34A2.33 2.33 0 0 0 14.66 4H6.56c-.71 0-1.37.37-1.73.97L2.17 11.12Z"
+      fill="currentColor"
     />
   </svg>
 );

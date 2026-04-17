@@ -178,23 +178,25 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
       </div>
 
       {/* ── Desktop ── */}
-      <div className="hidden min-h-screen bg-panel lg:block">
-        <Header />
-        <div className="flex min-h-[calc(100vh-66px)] items-stretch gap-5 p-5">
-          <Sidebar
-            categories={filteredCategories}
-            query={query}
-            onQueryChange={setQuery}
-            expandedIds={expandedIds}
-            onToggleCategory={handleToggleCategory}
-            activeSlug={activeSlug}
-            onSelectArticle={handleSelectArticle}
-            isSearching={isSearching}
-          />
-          <div className="w-0.5 shrink-0 rounded-[63px] bg-border-soft" />
-          <main className="flex min-w-0 flex-1 justify-center">
-            {content}
-          </main>
+      <div className="hidden min-h-screen bg-bg px-6 py-13 lg:flex lg:items-start lg:justify-center">
+        <div className="w-full max-w-373.5 overflow-hidden rounded-lg bg-panel">
+          <Header />
+          <div className="flex items-stretch gap-5 p-5">
+            <Sidebar
+              categories={filteredCategories}
+              query={query}
+              onQueryChange={setQuery}
+              expandedIds={expandedIds}
+              onToggleCategory={handleToggleCategory}
+              activeSlug={activeSlug}
+              onSelectArticle={handleSelectArticle}
+              isSearching={isSearching}
+            />
+            <div className="w-0.5 shrink-0 rounded-[63px] bg-border-soft" />
+            <main className="flex min-w-0 flex-1 justify-center">
+              {content}
+            </main>
+          </div>
         </div>
       </div>
 
