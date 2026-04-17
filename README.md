@@ -29,6 +29,18 @@ npm run typecheck  # TypeScript kontrolu
 
 ## Mimari Kararlar
 
+### Katmanli Bilesen Mimarisi
+
+Proje dort katmana ayrilmistir:
+
+- **Orchestrator** (`HelpCenter.tsx`): Tum state yonetimi (routing, search, accordion, drawer) tek dosyada toplanir. Hicbir layout markup'i iceremez — yalnizca hook'lari calistirir ve props'lari layout'lara iletir.
+- **Layouts** (`layouts/`): `DesktopLayout` ve `MobileLayout` birbirinden tamamen bagimsiz shell bilesenlerdir. Her biri kendi gorunurluk sinifini (`md:hidden` / `hidden md:flex`) yonetir ve `children` slot'u ile icerik alir. Mobil layout'a ozgu scroll-reveal davranisi `MobileHeader` bilesenine ayrilmistir.
+- **Views** (`views/`): `HomeView` ve `ArticleDetailView` tam sayfa gorunumleridir. `ContentRouter`, `AnimatePresence` ile aralarindaki gecisi yonetir.
+- **Features** (`features/`): `SearchInput`, `Sidebar`, `SidebarCategory`, `FeedbackBox`, `MobileCategoryDrawer` gibi etkilesinimli ozellik bilesenleri.
+- **UI** (`ui/`): `Header`, `ArticleCard`, `ContentBlock`, `StatPill`, `Skeleton` gibi sunum katmani bilesenleri. Is mantigi icermezler.
+
+Bu yaklasim sayesinde mobil layout'u degistirmek icin desktop koduna dokunmaniza gerek kalmaz; yeni bir view eklemek icin orchestrator'u degistirmeniz yeterlidir.
+
 ### Hash-Based Routing
 
 Case gereksinimine gore makale detaylari `#slug` ile yonetiliyor. `useSyncExternalStore` ile hash state'i React'a senkronize ediliyor. `history.pushState` ile URL guncelleniyor, `hashchange` event'i ile tarayici geri/ileri butonlari destekleniyor. Gecersiz hash girildiginde otomatik olarak ana sayfaya donuluyor.
@@ -39,19 +51,25 @@ Case gereksinimine gore makale detaylari `#slug` ile yonetiliyor. `useSyncExtern
 
 ### Sidebar Senkronizasyonu
 
-Accordion state yonetimi `useExpandedCategories` hook'unda. Arama yapilirken eslesen kategoriler otomatik acilir. Arama temizlendiginde yalnizca aktif makalenin kategorisi acik kalir. Kullanicinin manuel toggle'lari korunur.
+Accordion state yonetimi `useExpandedCategories` hook'unda `useReducer` ile yapilir. Auto-expand (arama/navigasyon kaynakli) ve user-toggle (kullanici tiklama kaynakli) state'leri ayri tutulur. Arama yapilirken eslesen kategoriler otomatik acilir. Arama temizlendiginde yalnizca aktif makalenin kategorisi acik kalir. Kullanicinin manuel toggle'lari korunur.
 
 ### Responsive Tasarim
 
-Uc breakpoint: mobil (< 768px), tablet (768-1024px), desktop (> 1024px). Mobilde Figma'daki tasarim birebir uygulanmistir: `#121212` arka plan uzerinde `#1E1E1F` panel, alttan acilan bottom sheet kategori modali, scroll-reveal header. Desktop'ta merkezi panel (1494px) ile Figma tasarimina sadik kalinmistir.
+Uc breakpoint: mobil (< 768px), tablet (768-1024px), desktop (> 1024px). Mobil ve desktop layout'lar ayri bilesenlerdir (`MobileLayout` / `DesktopLayout`) — CSS visibility ile gizleme yerine mimari ayrim saglanmistir. Mobilde Figma'daki tasarim birebir uygulanmistir: `#121212` arka plan uzerinde `#1E1E1F` panel, alttan acilan bottom sheet kategori modali, scroll-reveal header. Desktop'ta merkezi panel (1494px) ile Figma tasarimina sadik kalinmistir.
 
-### Bileşen Mimarisi
+### Code Splitting
 
-Her bilesen tek sorumluluga sahiptir. Is mantigi custom hook'lara (`useHashRoute`, `useArticleSearch`, `useDebouncedValue`, `useExpandedCategories`, `useScrollReveal`) ayrilmistir. Tekrarlanan pattern'lar bilesenlestirilmistir (`SearchInput`, `ContentBlock`, `FeedbackButton`). Tum renkler CSS token'lari uzerinden yonetilir, hardcoded deger yoktur.
+`MobileCategoryDrawer` `next/dynamic` ile dinamik olarak import edilir (`ssr: false`). Bu bilesen yalnizca mobilde ve drawer acildiginda kullanildigi icin desktop kullanicilari bu kodu hicbir zaman indirmez. Ilk sayfa yuklemesinde bundle boyutu azaltilmistir.
+
+### Next.js App Router Conventions
+
+- **`error.tsx`**: Route seviyesinde hata yakalama. Beklenmeyen hatalar kullanici dostu bir mesaj ve "Tekrar Dene" butonu ile karsilanir. Navigasyonda otomatik reset saglar.
+- **`loading.tsx`**: Route seviyesinde skeleton shell. Sayfa gecislerinde ve code-split chunk yuklemelerinde aninda gorsel geri bildirim saglar.
+- **`generateMetadata` kullanilmamasinin sebebi**: Hash-based routing (`#slug`) kullanildigindan, hash degeri sunucuya iletilmez — `generateMetadata` aktif makaleyi okuyamaz. Bu kisit nedeniyle dinamik sayfa basligi `document.title` ile `useEffect` icinde ayarlanir. Statik metadata (`title`, `description`, OpenGraph) `layout.tsx`'te tanimlidir.
 
 ### Skeleton Loading
 
-Arama sirasinda debounce beklerken kart ve sidebar skeleton'lari gosterilir. Skeleton boyutlari gercek bilesenlerin boyutlariyla eslesmektedir.
+Arama sirasinda debounce beklerken kart ve sidebar skeleton'lari gosterilir. Skeleton boyutlari gercek bilesenlerin boyutlariyla eslesmektedir. Route seviyesinde `loading.tsx` ile sayfa yukleme sirasinda da skeleton gosterilir.
 
 ### Empty Search State
 
@@ -65,48 +83,64 @@ Arama sonucu bosken kullanici cikmazda birakilmaz. En cok goruntulenen 3 makale 
 
 ```
 app/
-  layout.tsx                 # Root layout, font, metadata, viewport
-  page.tsx                   # / → /yardim-merkezi redirect
-  globals.css                # Tailwind v4 tema token'lari + global stiller
-  not-found.tsx              # 404 sayfasi
-  yardim-merkezi/page.tsx    # Server component, JSON import
+  layout.tsx                            # Root layout, font, metadata, viewport
+  page.tsx                              # / → /yardim-merkezi redirect
+  globals.css                           # Tailwind v4 tema token'lari + global stiller
+  not-found.tsx                         # 404 sayfasi
+  yardim-merkezi/
+    page.tsx                            # Server component, JSON import
+    error.tsx                           # App Router hata boundary'si
+    loading.tsx                         # Route-level skeleton shell
 
 components/
   help-center/
-    HelpCenter.tsx           # Client root: routing, search, view switching
-    Header.tsx               # Desktop header
-    Sidebar.tsx              # Search + accordion kategori listesi
-    SidebarCategory.tsx      # Tek kategori accordion
-    SearchInput.tsx           # Paylasilmis arama input'u (mobil + desktop)
-    HomeView.tsx             # Hero + CTA + makale grid
-    ArticleDetailView.tsx    # Makale icerik + feedback
-    ArticleCard.tsx          # Makale karti
-    ContentBlock.tsx         # Makale icerik blogu renderer (heading/paragraph/image)
-    StatPill.tsx             # Goruntuleme/begeni pill'leri
-    LiveSupportButton.tsx    # Canli destek butonu (gorsel)
-    BackButton.tsx           # Geri don butonu
-    FeedbackBox.tsx          # Evet/Hayir geri bildirim
-    EmptySearchState.tsx     # Sonuc yok + populer oneriler
-    Skeleton.tsx             # Loading skeleton bilesenleri
-    MobileCategoryDrawer.tsx # Bottom sheet kategori modali
-  icons/index.tsx            # SVG UI ikonlar + PNG kategori gorselleri
+    HelpCenter.tsx                      # Orchestrator: state yonetimi, layout delegasyonu
+
+    layouts/
+      DesktopLayout.tsx                 # Desktop shell: Header + Sidebar + content slot
+      MobileLayout.tsx                  # Mobile shell: scroll-reveal header + content slot
+      MobileHeader.tsx                  # Sticky arama + kategori butonu
+
+    views/
+      ContentRouter.tsx                 # AnimatePresence ile view gecisi
+      HomeView.tsx                      # Hero + CTA + makale grid
+      ArticleDetailView.tsx             # Makale icerik + feedback
+
+    features/
+      SearchInput.tsx                   # Paylasilmis arama input'u (mobil + desktop)
+      Sidebar.tsx                       # Search + accordion kategori listesi
+      SidebarCategory.tsx               # Tek kategori accordion
+      FeedbackBox.tsx                   # Evet/Hayir geri bildirim
+      MobileCategoryDrawer.tsx          # Bottom sheet kategori modali (dynamic import)
+
+    ui/
+      Header.tsx                        # Paylasilmis header (className ile mobile/desktop)
+      ArticleCard.tsx                   # Makale karti
+      ContentBlock.tsx                  # Icerik blogu renderer (heading/paragraph/image)
+      StatPill.tsx                      # Goruntuleme/begeni pill'leri
+      BackButton.tsx                    # Geri don butonu
+      LiveSupportButton.tsx             # Canli destek butonu (gorsel)
+      EmptySearchState.tsx              # Sonuc yok + populer oneriler
+      Skeleton.tsx                      # Loading skeleton bilesenleri
+
+  icons/index.tsx                       # SVG UI ikonlar + PNG kategori gorselleri
 
 lib/
   hooks/
-    useHashRoute.ts          # useSyncExternalStore ile hash yonetimi
-    useArticleSearch.ts      # Turkce normalizasyonlu arama
-    useDebouncedValue.ts     # Generic debounce hook
-    useExpandedCategories.ts # Accordion state yonetimi (useReducer)
-    useScrollReveal.ts       # Mobil scroll-reveal header
-  types.ts                   # TypeScript tip tanimlari
+    useHashRoute.ts                     # useSyncExternalStore ile hash yonetimi
+    useArticleSearch.ts                 # Turkce normalizasyonlu arama
+    useDebouncedValue.ts                # Generic debounce hook
+    useExpandedCategories.ts            # Accordion state yonetimi (useReducer)
+    useScrollReveal.ts                  # Mobil scroll-reveal header
+  types.ts                              # TypeScript tip tanimlari
 
 data/
-  helpCenter.json            # 4 kategori, 10 makale
+  helpCenter.json                       # 4 kategori, 10 makale
 ```
 
 ## Trade-offs
 
-- Error boundary minimal seviyede eklendi — case scope disinda ama production mindset icin gerekli goruldu.
+- Hash-based routing nedeniyle `generateMetadata` kullanilamaz — `#hash` sunucuya iletilmez. Dinamik sayfa basligi `document.title` ile client-side ayarlanir. Statik metadata (OG, Twitter) `layout.tsx`'te tanimlidir.
 - Runtime validation (zod vb.) eklenmedi — veri kaynagi statik JSON dosyasi oldugu icin `as` cast yeterli goruldu.
 - Figma'da Gilroy fontu kullanilmis — lisansli oldugu icin en yakin acik alternatif olan Plus Jakarta Sans tercih edildi.
 - Feedback oylamasinda localStorage persistence eklenmedi — case scope'unda bilinçli olarak birakildi.
@@ -117,3 +151,4 @@ data/
 - Sayfa statik olarak prerender edilmektedir (SSG). Client JS yalnizca etkilesimli bilesenler icin yuklenir.
 - Erisebilirlik: `aria-expanded`, `aria-pressed`, `aria-label`, `focus-visible` ring, semantic HTML kullanilmistir.
 - Tum tasarim token'lari (`globals.css` icinde `@theme inline`) Figma'daki renk paletinin birebir karsiliklaridir.
+- `MobileCategoryDrawer` `next/dynamic` ile lazy-load edilir; desktop kullanicilari bu kodu indirmez.

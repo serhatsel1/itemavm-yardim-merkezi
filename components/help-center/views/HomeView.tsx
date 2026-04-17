@@ -3,10 +3,10 @@
 import { motion } from "framer-motion";
 import type { Category, HelpCenterData } from "@/lib/types";
 import { HeroQuestionIllustration } from "@/components/icons";
-import { ArticleCard } from "./ArticleCard";
-import { LiveSupportButton } from "./LiveSupportButton";
-import { CARD_GRID_CLASS, CardGridSkeleton } from "./Skeleton";
-import { EmptySearchState } from "./EmptySearchState";
+import { ArticleCard } from "../ui/ArticleCard";
+import { LiveSupportButton } from "../ui/LiveSupportButton";
+import { CARD_GRID_CLASS, CardGridSkeleton } from "../ui/Skeleton";
+import { EmptySearchState } from "../ui/EmptySearchState";
 
 export function HomeView({
   categories,

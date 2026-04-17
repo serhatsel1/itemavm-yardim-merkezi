@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import type { Article } from "@/lib/types";
-import { BackButton } from "./BackButton";
-import { ContentBlock } from "./ContentBlock";
-import { FeedbackBox } from "./FeedbackBox";
+import { BackButton } from "../ui/BackButton";
+import { ContentBlock } from "../ui/ContentBlock";
+import { FeedbackBox } from "../features/FeedbackBox";
 
 const ARTICLE_TITLE_CLASS =
   "text-[18px] font-semibold leading-[1.333] text-text md:max-w-125 md:text-[22px] md:leading-[1.091]";

@@ -2,7 +2,7 @@
 
 import type { Category } from "@/lib/types";
 import { SidebarCategory } from "./SidebarCategory";
-import { SidebarCategorySkeleton } from "./Skeleton";
+import { SidebarCategorySkeleton } from "../ui/Skeleton";
 import { SearchInput } from "./SearchInput";
 
 export function Sidebar({
