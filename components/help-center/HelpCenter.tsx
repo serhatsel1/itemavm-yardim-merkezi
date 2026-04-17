@@ -32,10 +32,17 @@ function findArticle(
 export function HelpCenter({ data }: { data: HelpCenterData }) {
   const { categories } = data;
   const [activeSlug, setActiveSlug] = useHashRoute();
-  const [query, setQuery] = useState("");
+  const [query, setQueryRaw] = useState("");
+
+  const setQuery = useCallback(
+    (value: string) => {
+      setQueryRaw(value);
+      if (value && activeSlug) setActiveSlug(null);
+    },
+    [activeSlug, setActiveSlug]
+  );
   const debouncedQuery = useDebouncedValue(query, 300);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const contentPanelRef = useRef<HTMLDivElement>(null);
   const mobileHeaderRef = useRef<HTMLDivElement>(null);
   const headerHidden = useScrollReveal(mobileHeaderRef);
 
@@ -68,29 +75,22 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
     match?.category.id
   );
 
-  const scrollToContent = useCallback(() => {
-    requestAnimationFrame(() => {
-      if (contentPanelRef.current) {
-        contentPanelRef.current.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    });
-  }, []);
+  // activeSlug değiştiğinde sayfayı en üste scroll et
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [activeSlug]);
 
   const handleSelectArticle = useCallback(
     (slug: string) => {
       setQuery("");
       setActiveSlug(slug);
-      scrollToContent();
     },
-    [setActiveSlug, scrollToContent]
+    [setActiveSlug, setQuery]
   );
 
   const handleBackHome = useCallback(() => {
     setActiveSlug(null);
-    scrollToContent();
-  }, [setActiveSlug, scrollToContent]);
+  }, [setActiveSlug]);
 
   const content = (
     <AnimatePresence mode="wait">
@@ -145,7 +145,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
         </div>
 
         <div className="flex flex-col gap-5 px-4 pb-6">
-          <div ref={contentPanelRef}>
+          <div>
             <div className="rounded-t-lg border-b border-border-soft bg-panel px-6 py-5">
               <h2 className="text-[16px] font-bold leading-[1.3] text-text">
                 Yardım Merkezi
