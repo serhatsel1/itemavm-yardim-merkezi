@@ -25,7 +25,7 @@ export function Sidebar({
   isSearching?: boolean;
 }) {
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-5 lg:w-100">
+    <aside className="flex w-full shrink-0 flex-col gap-5 md:w-60 lg:w-100">
       <SearchInput value={query} onChange={onQueryChange} />
 
       <div className="flex flex-col gap-4">

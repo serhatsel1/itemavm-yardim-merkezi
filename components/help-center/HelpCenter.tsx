@@ -103,7 +103,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
   return (
     <div className="min-h-screen w-full">
       {/* ── Mobile ── */}
-      <div className="min-h-screen bg-bg px-4 pb-6 pt-4.75 lg:hidden">
+      <div className="min-h-screen bg-bg px-4 pb-6 pt-4.75 md:hidden">
         <div className="flex flex-col gap-5">
           <SearchInput value={query} onChange={setQuery} className="bg-panel" />
 
@@ -134,8 +134,8 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
         </div>
       </div>
 
-      {/* ── Desktop ── */}
-      <div className="hidden min-h-screen bg-bg px-6 py-13 lg:flex lg:items-start lg:justify-center">
+      {/* ── Tablet + Desktop ── */}
+      <div className="hidden min-h-screen bg-bg px-6 py-13 md:flex md:items-start md:justify-center">
         <div className="w-full max-w-373.5 overflow-hidden rounded-lg bg-panel">
           <Header />
           <div className="flex items-stretch gap-5 p-5">

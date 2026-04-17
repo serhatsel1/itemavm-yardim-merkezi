@@ -41,7 +41,7 @@ export function MobileCategoryDrawer({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+            className="fixed inset-0 z-40 bg-black/60 md:hidden"
           />
 
           {/* Bottom sheet */}
@@ -50,7 +50,7 @@ export function MobileCategoryDrawer({
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed inset-x-0 bottom-0 z-50 flex max-h-[90vh] flex-col rounded-t-[20px] border-t-2 border-white/10 bg-panel lg:hidden"
+            className="fixed inset-x-0 bottom-0 z-50 flex max-h-[90vh] flex-col rounded-t-[20px] border-t-2 border-white/10 bg-panel md:hidden"
             role="dialog"
             aria-label="Kategoriler"
           >

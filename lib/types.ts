@@ -1,9 +1,3 @@
-export type CategoryIconKey =
-  | "info"
-  | "payment"
-  | "publisher"
-  | "cover-image";
-
 export type ArticleIconKey =
   | "info"
   | "payment"
@@ -13,6 +7,11 @@ export type ArticleIconKey =
   | "money"
   | "software"
   | "find";
+
+export type CategoryIconKey = Extract<
+  ArticleIconKey,
+  "info" | "payment" | "publisher" | "cover-image"
+>;
 
 export type ArticleContentBlock =
   | { type: "paragraph"; text: string }

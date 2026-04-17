@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 export const CARD_GRID_CLASS =
-  "grid w-full grid-cols-1 gap-3.75 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6";
+  "grid w-full grid-cols-1 gap-3.75 lg:grid-cols-2 xl:grid-cols-3 xl:gap-6";
 
 function Bone({ className }: { className?: string }) {
   return (
@@ -54,11 +54,11 @@ export function SidebarCategorySkeleton() {
 
 export function HomeViewSkeleton() {
   return (
-    <div className="flex w-full flex-1 flex-col items-center gap-7.5 py-7.5 lg:py-10">
+    <div className="flex w-full flex-1 flex-col items-center gap-7.5 py-7.5 md:py-10">
       {/* Welcome skeleton */}
-      <div className="flex flex-col items-center gap-7.5 lg:gap-10">
-        <div className="flex flex-col items-center gap-5 lg:gap-10">
-          <Bone className="h-15 w-15 rounded-2xl lg:h-17.5 lg:w-17.5" />
+      <div className="flex flex-col items-center gap-7.5 md:gap-10">
+        <div className="flex flex-col items-center gap-5 md:gap-10">
+          <Bone className="h-15 w-15 rounded-2xl md:h-17.5 md:w-17.5" />
           <div className="flex flex-col items-center gap-6">
             <Bone className="h-7 w-72" />
             <div className="flex flex-col items-center gap-2">
@@ -82,7 +82,7 @@ export function HomeViewSkeleton() {
 
 export function SidebarSkeleton() {
   return (
-    <div className="flex w-full shrink-0 flex-col gap-5 lg:w-100">
+    <div className="flex w-full shrink-0 flex-col gap-5 md:w-60 lg:w-100">
       <Bone className="h-14 w-full rounded-lg" />
       <div className="flex flex-col gap-4">
         {Array.from({ length: 4 }).map((_, i) => (

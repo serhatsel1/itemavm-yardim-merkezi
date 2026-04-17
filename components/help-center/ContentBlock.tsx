@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { ArticleContentBlock } from "@/lib/types";
 
 const HEADING_CLASS =
-  "text-[18px] font-semibold leading-[1.333] text-text lg:text-[22px] lg:leading-[1.091]";
+  "text-[18px] font-semibold leading-[1.333] text-text md:text-[22px] md:leading-[1.091]";
 
 export function ContentBlock({ block }: { block: ArticleContentBlock }) {
   switch (block.type) {
