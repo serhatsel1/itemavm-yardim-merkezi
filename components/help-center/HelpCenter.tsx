@@ -1,11 +1,12 @@
 "use client";
 
 import { AnimatePresence } from "framer-motion";
-import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
-import type { Article, Category, HelpCenterData } from "@/lib/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type { Article, HelpCenterData } from "@/lib/types";
 import { useHashRoute } from "@/lib/hooks/useHashRoute";
 import { useArticleSearch } from "@/lib/hooks/useArticleSearch";
 import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
+import { useExpandedCategories } from "@/lib/hooks/useExpandedCategories";
 import { ChevronDownIcon, GridIcon } from "@/components/icons";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
@@ -14,25 +15,10 @@ import { HomeView } from "./HomeView";
 import { ArticleDetailView } from "./ArticleDetailView";
 import { MobileCategoryDrawer } from "./MobileCategoryDrawer";
 
-type ExpandAction =
-  | { type: "toggle"; id: string }
-  | { type: "sync"; auto: Set<string> };
-
-function expandReducer(
-  state: { auto: Set<string>; userToggled: Set<string> },
-  action: ExpandAction
+function findArticle(
+  categories: HelpCenterData["categories"],
+  slug: string | null
 ) {
-  if (action.type === "toggle") {
-    const next = new Set(state.userToggled);
-    if (next.has(action.id)) next.delete(action.id);
-    else next.add(action.id);
-    return { ...state, userToggled: next };
-  }
-  // sync: auto changed, reset user toggles
-  return { auto: action.auto, userToggled: new Set<string>() };
-}
-
-function findArticle(categories: Category[], slug: string | null) {
   if (!slug) return null;
   for (const category of categories) {
     const article = category.articles.find((a) => a.slug === slug);
@@ -61,34 +47,9 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
   );
   const activeArticle: Article | null = match?.article ?? null;
 
-  // Invalid hash → clear and fall back to home
   useEffect(() => {
     if (activeSlug && !match) setActiveSlug(null);
   }, [activeSlug, match, setActiveSlug]);
-
-  const autoExpandedIds = useMemo(() => {
-    if (isFiltered) return new Set(filteredCategories.map((c) => c.id));
-    if (match?.category) return new Set([match.category.id]);
-    return new Set<string>();
-  }, [isFiltered, filteredCategories, match]);
-
-  const [expandState, dispatchExpand] = useReducer(expandReducer, {
-    auto: autoExpandedIds,
-    userToggled: new Set<string>(),
-  });
-
-  useEffect(() => {
-    dispatchExpand({ type: "sync", auto: autoExpandedIds });
-  }, [autoExpandedIds]);
-
-  const expandedIds = useMemo(() => {
-    const merged = new Set(expandState.auto);
-    expandState.userToggled.forEach((id) => {
-      if (merged.has(id)) merged.delete(id);
-      else merged.add(id);
-    });
-    return merged;
-  }, [expandState]);
 
   useEffect(() => {
     document.title = activeArticle
@@ -96,9 +57,10 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
       : "itemAVM Yardım Merkezi";
   }, [activeArticle]);
 
-  const handleToggleCategory = useCallback(
-    (id: string) => dispatchExpand({ type: "toggle", id }),
-    []
+  const { expandedIds, toggleCategory } = useExpandedCategories(
+    filteredCategories,
+    isFiltered,
+    match?.category.id
   );
 
   const handleSelectArticle = useCallback(
@@ -116,7 +78,6 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
     setActiveSlug(null);
   }, [setActiveSlug]);
 
-  /* ── Shared content ── */
   const content = (
     <AnimatePresence mode="wait">
       {activeArticle ? (
@@ -146,7 +107,6 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
         <div className="flex flex-col gap-5">
           <SearchInput value={query} onChange={setQuery} className="bg-panel" />
 
-          {/* Kategoriler trigger */}
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
@@ -163,16 +123,13 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
             </span>
           </button>
 
-          {/* Main panel: header + body */}
           <div>
             <div className="rounded-t-lg border-b border-border-soft bg-panel px-6 py-5">
               <h2 className="text-[16px] font-bold leading-[1.3] text-white">
                 Yardım Merkezi
               </h2>
             </div>
-            <div className="rounded-b-lg bg-panel p-4">
-              {content}
-            </div>
+            <div className="rounded-b-lg bg-panel p-4">{content}</div>
           </div>
         </div>
       </div>
@@ -187,7 +144,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
               query={query}
               onQueryChange={setQuery}
               expandedIds={expandedIds}
-              onToggleCategory={handleToggleCategory}
+              onToggleCategory={toggleCategory}
               activeSlug={activeSlug}
               onSelectArticle={handleSelectArticle}
               isSearching={isSearching}
@@ -205,7 +162,7 @@ export function HelpCenter({ data }: { data: HelpCenterData }) {
         onClose={() => setMobileOpen(false)}
         categories={categories}
         expandedIds={expandedIds}
-        onToggleCategory={handleToggleCategory}
+        onToggleCategory={toggleCategory}
         activeSlug={activeSlug}
         onSelectArticle={handleSelectArticle}
       />

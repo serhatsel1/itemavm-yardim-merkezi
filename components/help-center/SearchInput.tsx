@@ -1,11 +1,12 @@
 "use client";
 
+import clsx from "clsx";
 import { CloseIcon, SearchIcon } from "@/components/icons";
 
 export function SearchInput({
   value,
   onChange,
-  className = "",
+  className,
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -13,7 +14,10 @@ export function SearchInput({
 }) {
   return (
     <div
-      className={`relative flex h-14 items-center rounded-lg border border-white/10 bg-card px-4 ${className}`}
+      className={clsx(
+        "relative flex h-14 items-center rounded-lg border border-white/10 bg-card px-4",
+        className
+      )}
     >
       <SearchIcon className="h-4.5 w-4.5 shrink-0 text-text" />
       <input

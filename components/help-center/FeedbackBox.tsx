@@ -1,11 +1,46 @@
 "use client";
 
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { DislikeIcon, LikeIcon } from "@/components/icons";
 
 type Choice = "yes" | "no" | null;
+
+const FEEDBACK_BTN_BASE =
+  "inline-flex h-[45px] min-w-[130px] items-center justify-center gap-2.5 rounded-lg border px-4 text-[14px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40";
+
+function FeedbackButton({
+  pressed,
+  onClick,
+  variant,
+  icon,
+  children,
+}: {
+  pressed: boolean;
+  onClick: () => void;
+  variant: "success" | "danger";
+  icon: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <motion.button
+      type="button"
+      whileTap={{ scale: 0.96 }}
+      onClick={onClick}
+      aria-pressed={pressed}
+      className={clsx(
+        FEEDBACK_BTN_BASE,
+        pressed
+          ? `border-${variant} bg-${variant}/10 text-${variant}`
+          : `border-${variant} bg-card text-${variant} hover:bg-${variant}/5`
+      )}
+    >
+      {icon}
+      {children}
+    </motion.button>
+  );
+}
 
 export function FeedbackBox({
   initialYesCount,
@@ -23,9 +58,7 @@ export function FeedbackBox({
   const noCount = initialNoCount + (choice === "no" ? 1 : 0);
 
   return (
-    <div
-      className="flex w-full flex-col items-center gap-6 rounded-lg border border-white/5 bg-card-alt py-6 text-center lg:py-5 lg:max-w-248.5"
-    >
+    <div className="flex w-full flex-col items-center gap-6 rounded-lg border border-white/5 bg-card-alt py-6 text-center lg:max-w-248.5 lg:py-5">
       <div className="flex max-w-67.5 flex-col items-center gap-4 lg:max-w-none">
         <h3 className="text-[18px] font-semibold leading-[2.222] text-text lg:max-w-194.75">
           Bu İçeriği Faydalı Buldunuz mu?
@@ -36,36 +69,22 @@ export function FeedbackBox({
         </p>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-2.5">
-        <motion.button
-          type="button"
-          whileTap={{ scale: 0.96 }}
+        <FeedbackButton
+          pressed={choice === "yes"}
           onClick={() => toggle("yes")}
-          aria-pressed={choice === "yes"}
-          className={clsx(
-            "inline-flex h-[45px] min-w-[130px] items-center justify-center gap-2.5 rounded-lg border px-4 text-[14px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-            choice === "yes"
-              ? "border-success bg-success/10 text-success"
-              : "border-success bg-card text-success hover:bg-success/5"
-          )}
+          variant="success"
+          icon={<LikeIcon className="h-4.5 w-4.5" />}
         >
-          <LikeIcon className="h-[18px] w-[18px]" />
           Evet ({yesCount})
-        </motion.button>
-        <motion.button
-          type="button"
-          whileTap={{ scale: 0.96 }}
+        </FeedbackButton>
+        <FeedbackButton
+          pressed={choice === "no"}
           onClick={() => toggle("no")}
-          aria-pressed={choice === "no"}
-          className={clsx(
-            "inline-flex h-[45px] min-w-[130px] items-center justify-center gap-2.5 rounded-lg border px-4 text-[14px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-            choice === "no"
-              ? "border-danger bg-danger/10 text-danger"
-              : "border-danger bg-card text-danger hover:bg-danger/5"
-          )}
+          variant="danger"
+          icon={<DislikeIcon className="h-4.5 w-4.5" />}
         >
-          <DislikeIcon className="h-[18px] w-[18px]" />
           Hayır ({noCount})
-        </motion.button>
+        </FeedbackButton>
       </div>
     </div>
   );

@@ -1,10 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Article } from "@/lib/types";
 import { BackButton } from "./BackButton";
+import { ContentBlock } from "./ContentBlock";
 import { FeedbackBox } from "./FeedbackBox";
+
+const ARTICLE_TITLE_CLASS =
+  "text-[18px] font-semibold leading-[1.333] text-text lg:max-w-125 lg:text-[22px] lg:leading-[1.091]";
 
 export function ArticleDetailView({
   article,
@@ -25,44 +28,12 @@ export function ArticleDetailView({
       <BackButton onClick={onBack} />
 
       <article className="flex w-full flex-col gap-7.5 rounded-xl border border-white/5 bg-card-alt p-4 lg:max-w-248.5 lg:gap-10 lg:px-5 lg:py-7.5">
-        <h1 className="text-[18px] font-semibold leading-[1.333] text-text lg:max-w-125 lg:text-[22px] lg:leading-[1.091]">
-          {article.title}
-        </h1>
+        <h1 className={ARTICLE_TITLE_CLASS}>{article.title}</h1>
 
         <div className="flex flex-col gap-5">
-          {article.content.map((block, index) => {
-            if (block.type === "heading") {
-              return (
-                <h2
-                  key={index}
-                  className="text-[18px] font-semibold leading-[1.333] text-text lg:text-[22px] lg:leading-[1.091]"
-                >
-                  {block.text}
-                </h2>
-              );
-            }
-            if (block.type === "paragraph") {
-              return (
-                <p
-                  key={index}
-                  className="text-[14px] font-medium leading-[1.714] text-text-muted"
-                >
-                  {block.text}
-                </p>
-              );
-            }
-            return (
-              <figure key={index} className="relative overflow-hidden">
-                <Image
-                  src={block.src}
-                  alt={block.alt}
-                  width={960}
-                  height={400}
-                  className="w-full object-cover"
-                />
-              </figure>
-            );
-          })}
+          {article.content.map((block, index) => (
+            <ContentBlock key={index} block={block} />
+          ))}
         </div>
       </article>
 
