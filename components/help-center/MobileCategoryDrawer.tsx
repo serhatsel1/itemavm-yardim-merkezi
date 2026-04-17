@@ -57,8 +57,8 @@ export function MobileCategoryDrawer({
             {/* Header */}
             <div className="relative flex shrink-0 flex-col items-center px-4 pt-6">
               <div className="flex items-center gap-2.5">
-                <GridIcon className="h-6 w-6 text-white" />
-                <span className="text-[18px] font-semibold leading-[1.333] tracking-[-0.006em] text-white">
+                <GridIcon className="h-6 w-6 text-text" />
+                <span className="text-[18px] font-semibold leading-[1.333] tracking-[-0.006em] text-text">
                   Kategoriler
                 </span>
               </div>
@@ -67,7 +67,7 @@ export function MobileCategoryDrawer({
               <button
                 type="button"
                 onClick={onClose}
-                className="absolute right-4 top-6 flex h-7.5 w-7.5 items-center justify-center text-white"
+                className="absolute right-4 top-6 flex h-7.5 w-7.5 items-center justify-center text-text"
                 aria-label="Kapat"
               >
                 <CloseIcon className="h-3.25 w-3.25" />

@@ -52,9 +52,9 @@ export function EmptySearchState({
               key={article.id}
               type="button"
               onClick={() => onOpenArticle(article.slug)}
-              className="flex items-center gap-3 rounded-lg border border-white/5 bg-card p-3.5 text-left transition-colors hover:border-white/10 hover:bg-white/[0.04]"
+              className="flex items-center gap-3 rounded-lg border border-white/5 bg-card p-3.5 text-left transition-colors hover:border-white/10 hover:bg-white/5"
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/[0.06]">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/5">
                 <span className="text-[14px]">
                   {article.views >= 10000
                     ? "🔥"

@@ -32,7 +32,7 @@ export function SearchInput({
         <button
           type="button"
           onClick={() => onChange("")}
-          className="ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-text-muted transition-colors hover:bg-white/20 hover:text-text"
+          className="ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/5 text-text-muted transition-colors hover:bg-white/10 hover:text-text"
           aria-label="Aramayı temizle"
         >
           <CloseIcon className="h-2.5 w-2.5" />

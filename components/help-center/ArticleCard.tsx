@@ -13,7 +13,7 @@ export function ArticleCard({
     <button
       type="button"
       onClick={() => onOpen(article.slug)}
-      className="group flex h-full flex-col items-center gap-4.75 rounded-lg border border-white/10 bg-card p-4.75 text-center transition-colors duration-200 hover:border-white/20 hover:bg-white/6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="group flex h-full flex-col items-center gap-4.75 rounded-lg border border-white/10 bg-card p-4.75 text-center transition-colors duration-200 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       <CategoryIcon icon={article.icon} className="h-14.25 w-14.25 object-contain" />
       <div className="flex flex-col gap-3.25">

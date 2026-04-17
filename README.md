@@ -1,151 +1,112 @@
-# itemAVM Yardım Merkezi — Frontend Case
+# itemAVM Yardim Merkezi
 
-Senior Frontend Developer mülakat case'i. Figma'da verilen itemAVM Yardım Merkezi tasarımı, **Next.js 16 App Router** üzerinde pixel-perfect implement edildi.
+**Vercel:** https://yardim-merkezi.vercel.app
 
-## Canlı Demo
-
-- **Vercel:** https://yardim-merkezi.vercel.app
-- **Lokal:** `http://localhost:3000/yardim-merkezi`
-
-## Teknolojiler
-
-| Katman    | Tercih                                   |
-| --------- | ---------------------------------------- |
-| Framework | **Next.js 16.2** (App Router, Turbopack) |
-| Dil       | **TypeScript** (strict)                  |
-| Styling   | **Tailwind CSS v4** (@theme inline)      |
-| Animasyon | **Framer Motion**                        |
-| Yardımcı  | `clsx`                                   |
-| Font      | `next/font` — Plus Jakarta Sans          |
-
-> **Not:** Figma'da Gilroy kullanılmış. Gilroy lisanslı bir font olduğu için açık alternatifi olan **Plus Jakarta Sans** tercih edildi. Tipografi ölçüleri ve ağırlıkları birebir uygulandı.
-
-## Proje Yapısı
-
-```
-app/
-  layout.tsx                 # Root layout, fontlar, metadata
-  page.tsx                   # /  →  /yardim-merkezi (redirect)
-  globals.css                # Tailwind v4 tema + global stiller
-  yardim-merkezi/page.tsx    # Server component — JSON import
-components/
-  help-center/
-    HelpCenter.tsx           # Client root: hash routing + search + view switching
-    Header.tsx               # Desktop header bar
-    Sidebar.tsx              # Arama + accordion kategori listesi
-    SidebarCategory.tsx      # Tek kategori accordion
-    HomeView.tsx             # Hero + CTA + makale grid
-    ArticleDetailView.tsx    # Detay içerik + feedback
-    ArticleCard.tsx          # Makale kartı
-    StatPill.tsx             # Görüntülenme/beğeni pill'leri
-    LiveSupportButton.tsx    # Canlı destek CTA butonu
-    BackButton.tsx           # Geri dön butonu
-    FeedbackBox.tsx          # "Faydalı buldunuz mu?" — local state
-    EmptySearchState.tsx     # Sonuç yok + popüler öneriler
-    Skeleton.tsx             # Loading skeleton bileşenleri
-    MobileCategoryDrawer.tsx # Mobil bottom sheet modal
-  icons/index.tsx            # SVG UI ikonlar + PNG kategori görselleri
-lib/
-  hooks/
-    useHashRoute.ts          # Hash sync + History API
-    useArticleSearch.ts      # Türkçe-uyumlu normalize'lı filtre
-    useDebouncedValue.ts     # Generic debounce hook (300ms)
-  types.ts                   # TypeScript tip tanımları
-data/
-  helpCenter.json            # 4 kategori · 10 makale
-public/
-  icons/                     # Figma'dan export edilen PNG assetler
-```
-
-## Mimari Kararlar
-
-### 1. Hash-Based Routing
-
-Case gereği detay sayfaları **hash (`#slug`)** ile yönetiliyor. `useHashRoute` hook'u:
-
-- `window.location.hash`'i okuyup state'e senkronize eder
-- `history.pushState` ile URL günceller — tarayıcı geri/ileri doğru çalışır
-- `hashchange` eventini dinler — manuel URL değişimlerine tepki verir
-- SSR-safe: ilk render'da `null`, mount sonrası hydrate
-- **Deep linking:** `/yardim-merkezi#stoklu-ilan-nasil-eklenir` doğrudan açılır
-- Makale açıkken `document.title` dinamik güncellenir
-
-### 2. Arama (Debounced)
-
-`useArticleSearch` hook'u **Türkçe-uyumlu normalize** (büyük/küçük harf + diakritik) ile hem başlık hem özet üzerinden filtreler. `useDebouncedValue` (300ms) ile gereksiz re-render'lar önlenir. Debounce sırasında **skeleton loading** gösterilir. Filtrelenen veri hem sidebar hem grid için tek kaynak.
-
-### 3. Sidebar Senkronizasyonu
-
-- Kategoriler accordion — birden fazla aynı anda açık olabilir
-- Detay görünümünde aktif makalenin kategorisi otomatik açılır ve makale highlight'lanır
-- Arama yapılırken tüm eşleşen kategoriler expand olur
-- Arama temizlendiğinde yalnızca aktif makalenin kategorisi açık kalır
-
-### 4. View Switching + Animasyonlar
-
-`AnimatePresence mode="wait"` ile Home ↔ Detay geçişleri fade + slide. Sidebar accordion'ları `framer-motion` ile animate edilir. Bottom sheet modal spring animasyonla açılır.
-
-### 5. Feedback Local State
-
-- Her makale için bağımsız (parent `key` ile component remount/reset)
-- Aynı butona tekrar tıklama seçimi geri alır (toggle)
-- Figma'daki yeşil/kırmızı tint tasarımı birebir
-- Not: Geri bildirimler local state'te tutulur, sayfa yenilendiğinde sıfırlanır
-
-### 6. Responsive (Figma Birebir)
-
-- **Desktop (≥ 1024px):** Full-width panel — sidebar (400px) + divider + içerik
-- **Mobil (< 1024px):** `#121212` arka plan + `#1E1E1F` inset panel + bottom sheet kategori modal
-- Tüm spacing, typography ve renk değerleri Figma'dan pixel-perfect alındı
-
-### 7. Empty Search State
-
-Arama sonucu boşken: illustration + mesaj + en çok görüntülenen 3 makale önerisi. Kullanıcıyı çıkmaz sokakta bırakmaz.
-
-## Case Gereksinimleri
-
-- [x] Next.js 16+ App Router
-- [x] Ana sayfa + makale detay görünümü
-- [x] Sol accordion sidebar (kategori + makale listesi)
-- [x] Hero alanı + Canlı Destek butonu (görsel)
-- [x] Makale kart grid (başlık, özet, kategori ikonu, view/like/dislike)
-- [x] Arama çubuğu — sidebar ve grid senkron filtrelenir
-- [x] Hash-based URL routing + deep linking + tarayıcı geri/ileri
-- [x] Sidebar aktif makale highlight
-- [x] Geri Dön butonu
-- [x] "Bu İçeriği Faydalı Buldunuz mu?" feedback — local state
-- [x] JSON veri (4 kategori / 10 makale)
-
-### Bonus
-
-- [x] TypeScript (strict)
-- [x] Responsive (Figma mobil varyantına pixel-perfect)
-- [x] Framer Motion geçişleri (sidebar, sayfa, modal)
-- [x] Loading / skeleton state (debounce sırasında)
-- [x] Feedback local state (toggle + reset)
-
-## Kurulum ve Çalıştırma
+## Kurulum
 
 ```bash
 npm install
 npm run dev
 ```
 
-Tarayıcıda: [http://localhost:3000](http://localhost:3000) (otomatik olarak `/yardim-merkezi`'ye yönlenir.)
-
-## Scripts
+Tarayicida [http://localhost:3000](http://localhost:3000) adresine gidin. Otomatik olarak `/yardim-merkezi` sayfasina yonlendirilirsiniz.
 
 ```bash
-npm run dev        # Geliştirme sunucusu
-npm run build      # Üretim build
-npm start          # Üretim sunucusu
-npm run lint       # ESLint
-npm run typecheck  # TypeScript kontrol
+npm run build      # Uretim build
+npm run lint       # ESLint kontrolu
+npm run typecheck  # TypeScript kontrolu
+```
+
+## Kullanilan Teknolojiler
+
+| Katman    | Tercih                                   | Neden                                                    |
+| --------- | ---------------------------------------- | -------------------------------------------------------- |
+| Framework | Next.js 16.2 (App Router)                | Case gereksinimi. Turbopack ile hizli gelistirme.        |
+| Dil       | TypeScript (strict)                      | Tip guvenligi, refactor kolayligi, hata onleme.          |
+| Styling   | Tailwind CSS v4                          | Utility-first, tema token'lari `@theme inline` ile.     |
+| Animasyon | Framer Motion                            | Accordion, sayfa gecisleri, bottom sheet animasyonlari.  |
+| Font      | Plus Jakarta Sans (`next/font`)          | Figma'daki Gilroy lisansli; en yakin acik alternatif.    |
+
+## Mimari Kararlar
+
+### Hash-Based Routing
+
+Case gereksinimine gore makale detaylari `#slug` ile yonetiliyor. `useSyncExternalStore` ile hash state'i React'a senkronize ediliyor. `history.pushState` ile URL guncelleniyor, `hashchange` event'i ile tarayici geri/ileri butonlari destekleniyor. Gecersiz hash girildiginde otomatik olarak ana sayfaya donuluyor.
+
+### Arama
+
+`useArticleSearch` hook'u Turkce'ye ozel normalizasyon yapiyor (`toLocaleLowerCase("tr-TR")` + diacritic strip). Hem baslik hem ozet uzerinde arar. `useDebouncedValue` (300ms) ile her tus basilisinda filtreleme tetiklenmez; debounce sirasinda skeleton gosterilir.
+
+### Sidebar Senkronizasyonu
+
+Accordion state yonetimi `useExpandedCategories` hook'unda. Arama yapilirken eslesen kategoriler otomatik acilir. Arama temizlendiginde yalnizca aktif makalenin kategorisi acik kalir. Kullanicinin manuel toggle'lari korunur.
+
+### Responsive Tasarim
+
+Uc breakpoint: mobil (< 768px), tablet (768-1024px), desktop (> 1024px). Mobilde Figma'daki tasarim birebir uygulanmistir: `#121212` arka plan uzerinde `#1E1E1F` panel, alttan acilan bottom sheet kategori modali, scroll-reveal header. Desktop'ta merkezi panel (1494px) ile Figma tasarimina sadik kalinmistir.
+
+### Bileşen Mimarisi
+
+Her bilesen tek sorumluluga sahiptir. Is mantigi custom hook'lara (`useHashRoute`, `useArticleSearch`, `useDebouncedValue`, `useExpandedCategories`, `useScrollReveal`) ayrilmistir. Tekrarlanan pattern'lar bilesenlestirilmistir (`SearchInput`, `ContentBlock`, `FeedbackButton`). Tum renkler CSS token'lari uzerinden yonetilir, hardcoded deger yoktur.
+
+### Skeleton Loading
+
+Arama sirasinda debounce beklerken kart ve sidebar skeleton'lari gosterilir. Skeleton boyutlari gercek bilesenlerin boyutlariyla eslesmektedir.
+
+### Empty Search State
+
+Arama sonucu bosken kullanici cikmazda birakilmaz. En cok goruntulenen 3 makale onerisi sunulur.
+
+### Feedback
+
+"Bu Icerigi Faydali Buldunuz mu?" alani local state ile calisir. Her makale icin bagimsiz state tutulur, ayni butona tekrar tiklamak secimi geri alir. Persistence (localStorage) case scope'u disinda birakilmistir.
+
+## Proje Yapisi
+
+```
+app/
+  layout.tsx                 # Root layout, font, metadata, viewport
+  page.tsx                   # / → /yardim-merkezi redirect
+  globals.css                # Tailwind v4 tema token'lari + global stiller
+  not-found.tsx              # 404 sayfasi
+  yardim-merkezi/page.tsx    # Server component, JSON import
+
+components/
+  help-center/
+    HelpCenter.tsx           # Client root: routing, search, view switching
+    Header.tsx               # Desktop header
+    Sidebar.tsx              # Search + accordion kategori listesi
+    SidebarCategory.tsx      # Tek kategori accordion
+    SearchInput.tsx           # Paylasilmis arama input'u (mobil + desktop)
+    HomeView.tsx             # Hero + CTA + makale grid
+    ArticleDetailView.tsx    # Makale icerik + feedback
+    ArticleCard.tsx          # Makale karti
+    ContentBlock.tsx         # Makale icerik blogu renderer (heading/paragraph/image)
+    StatPill.tsx             # Goruntuleme/begeni pill'leri
+    LiveSupportButton.tsx    # Canli destek butonu (gorsel)
+    BackButton.tsx           # Geri don butonu
+    FeedbackBox.tsx          # Evet/Hayir geri bildirim
+    EmptySearchState.tsx     # Sonuc yok + populer oneriler
+    Skeleton.tsx             # Loading skeleton bilesenleri
+    MobileCategoryDrawer.tsx # Bottom sheet kategori modali
+  icons/index.tsx            # SVG UI ikonlar + PNG kategori gorselleri
+
+lib/
+  hooks/
+    useHashRoute.ts          # useSyncExternalStore ile hash yonetimi
+    useArticleSearch.ts      # Turkce normalizasyonlu arama
+    useDebouncedValue.ts     # Generic debounce hook
+    useExpandedCategories.ts # Accordion state yonetimi (useReducer)
+    useScrollReveal.ts       # Mobil scroll-reveal header
+  types.ts                   # TypeScript tip tanimlari
+
+data/
+  helpCenter.json            # 4 kategori, 10 makale
 ```
 
 ## Notlar
 
-- **Figma assetleri:** Kategori ikonları ve hero illustration Figma'dan PNG olarak export edildi. UI ikonlar (search, chevron, like vb.) inline SVG olarak birebir Figma stroke değerleriyle çizildi.
-- **Performans:** Sayfa statik olarak prerender ediliyor; client JS sadece etkileşimli bölümler için yüklenir.
-- **Erişilebilirlik:** Semantic HTML, `aria-expanded`, `aria-pressed`, `aria-label` ve `focus-visible` ring kullanıldı.
-- **Feedback:** Local state ile çalışır, persistence (localStorage) eklenmemiştir — case scope'unda bilinçli bir karar.
+- Figma'daki raster assetler (kategori ikonlari, hero, destek ikonu) PNG olarak export edilip `next/image` ile optimize edilmistir. UI ikonlar (search, chevron, like, dislike, eye) Figma'daki stroke degerleriyle birebir SVG olarak cizilmistir.
+- Sayfa statik olarak prerender edilmektedir (SSG). Client JS yalnizca etkilesimli bilesenler icin yuklenir.
+- Erisebilirlik: `aria-expanded`, `aria-pressed`, `aria-label`, `focus-visible` ring, semantic HTML kullanilmistir.
+- Tum tasarim token'lari (`globals.css` icinde `@theme inline`) Figma'daki renk paletinin birebir karsiliklaridir.

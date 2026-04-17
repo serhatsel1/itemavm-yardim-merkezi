@@ -111,6 +111,7 @@ export function CategoryIcon({
       alt=""
       width={60}
       height={60}
+      loading="eager"
       className={className}
       draggable={false}
     />

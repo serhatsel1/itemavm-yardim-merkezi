@@ -20,7 +20,7 @@ export function LiveSupportButton() {
           height={24}
           draggable={false}
         />
-        <span className="text-[16px] font-medium leading-[1.193] text-white">
+        <span className="text-[16px] font-medium leading-[1.193] text-text">
           Canlı Desteğe Bağlan
         </span>
       </span>

@@ -7,7 +7,7 @@ function Bone({ className }: { className?: string }) {
   return (
     <div
       className={clsx(
-        "animate-pulse rounded-md bg-white/[0.06]",
+        "animate-pulse rounded-md bg-white/5",
         className
       )}
     />

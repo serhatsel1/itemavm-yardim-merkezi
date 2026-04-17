@@ -8,7 +8,7 @@ import { DislikeIcon, LikeIcon } from "@/components/icons";
 type Choice = "yes" | "no" | null;
 
 const FEEDBACK_BTN_BASE =
-  "inline-flex h-[45px] min-w-[130px] items-center justify-center gap-2.5 rounded-lg border px-4 text-[14px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40";
+  "inline-flex h-[45px] min-w-[130px] items-center justify-center gap-2.5 rounded-lg border px-4 text-[14px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
 const VARIANT_STYLES = {
   success: {

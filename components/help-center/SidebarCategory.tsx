@@ -35,7 +35,7 @@ export function SidebarCategory({
         <motion.span
           animate={{ rotate: expanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-active text-text-muted"
+          className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-white/10 text-text-muted"
         >
           <ChevronDownIcon className="h-4.5 w-4.5" />
         </motion.span>
