@@ -8,7 +8,7 @@ import { DislikeIcon, LikeIcon } from "@/components/icons";
 type Choice = "yes" | "no" | null;
 
 const FEEDBACK_BTN_BASE =
-  "inline-flex h-[45px] min-w-[130px] items-center justify-center gap-2.5 rounded-lg border px-4 text-[14px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary";
+  "inline-flex h-[45px] min-w-[130px] items-center justify-center gap-2.5 rounded-lg border px-4 text-[14px] font-medium leading-[1.714] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
 const VARIANT_STYLES = {
   success: {
@@ -70,7 +70,7 @@ export function FeedbackBox({
         <h3 className="text-[18px] font-semibold leading-[2.222] text-text md:max-w-194.75">
           Bu İçeriği Faydalı Buldunuz mu?
         </h3>
-        <p className="text-[14px] font-medium leading-[1.714] text-text-muted md:max-w-133.5 md:text-[15px] md:leading-[1.6]">
+        <p className="text-[15px] font-medium leading-[1.6] text-text-muted md:max-w-133.5">
           Geri bildiriminiz, Yardım Merkezi içeriklerini sizin için daha iyi
           hale getirmemize yardımcı olur.
         </p>
