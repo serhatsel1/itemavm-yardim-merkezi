@@ -25,7 +25,7 @@ export function SearchInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Ara.."
-        className="ml-3 w-full bg-transparent text-[15px] leading-[1.16] text-text placeholder:text-text-muted focus:outline-none"
+        className="ml-3 w-full bg-transparent text-[16px] leading-[1.16] text-text placeholder:text-text-muted focus:outline-none"
         aria-label="Makalelerde ara"
       />
       {value && (
