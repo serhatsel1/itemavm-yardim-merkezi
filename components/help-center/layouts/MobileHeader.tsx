@@ -22,7 +22,7 @@ export function MobileHeader({
     <div
       ref={headerRef}
       className={clsx(
-        "sticky top-0 z-30 flex flex-col gap-4 bg-bg px-4 pb-4 pt-4.75 transition-transform duration-300",
+        "sticky top-0 z-30 flex flex-col gap-4 bg-bg px-4 pb-4 pt-4.5 transition-transform duration-300",
         headerHidden ? "-translate-y-full" : "translate-y-0"
       )}
     >
